@@ -1,0 +1,82 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<style is:inline>
+  #epic #a {
+    display: block;
+  }
+
+  #epic #b {
+    display: none;
+  }
+
+  #epic:active #a {
+    display: none;
+  }
+
+  #epic:active #b {
+    display: block;
+  }
+</style>
+
+<script>
+  import { toast } from "@/hooks/use-toast";
+
+  let count = 0;
+  document.getElementById("nothing")!!.onclick = () => {
+    count++;
+
+    if (count >= 10) {
+      toast({
+        title: "ENOUGH",
+        description: "I'll have to punish you now...",
+        duration: 3000,
+      });
+
+      window.location.href =
+        "/applications/illhavetopunishyouorelseyounotgonnaunderstandmypoweryesicannotcontrolanymore";
+    } else if (count >= 5) {
+      toast({
+        title: "STOP",
+        description: "STOP.... ITS TOO MUCH. I CAN'T HANDLE IT",
+        duration: 3000,
+      });
+    } else {
+      toast({
+        title: "Nothing",
+        description:
+          "See... as I said there's nothing. Now click on that button to go back to safety",
+        duration: 3000,
+      });
+    }
+  };
+</script>
+
+<Layout>
+  <div
+    class="w-full h-full flex flex-col items-center text-center justify-center"
+  >
+    <h1 class="text-8xl font-mono">404</h1>
+    <h1 class="text-xl font-mono mb-6">Page Not Found</h1>
+    <h2
+      class="text-background hover:text-foreground mx-6 font-mono transition-all"
+    >
+      Uh No! You are entering the unknown depths of terrain, but there's nothing
+      here. Trust me.... there is <span
+        class="border-2 border-border px-2 py-1 rounded-md select-none"
+        id="nothing">NOTHING</span
+      > here <br class="my-1" />
+      Let me show you the way to safety before some mysterious incident happens
+    </h2>
+
+    <a
+      href="/applications/"
+      class="font-mono mt-12 border-2 border-border px-4 py-2 rounded-md hover:bg-border transition-all"
+      id="epic"
+    >
+      <span id="a">Home</span>
+      <span id="b" class="dont-come-here-again">{"D̷̰̅ó̶̬ņ̸͐'̵̺̀t̸̙̚ ̸͖̈́c̸̣͋o̶̱̿m̴̖̎e̶̙͑ ̵͙̈h̴̥̐é̵̲r̸̰̋e̴͔̔"}</span>
+    </a>
+  </div>
+</Layout>
