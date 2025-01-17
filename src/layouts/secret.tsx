@@ -45,7 +45,7 @@ export function Secret() {
             <em>The echoes grow louder...</em>
           </p>
           <p className="glitch">
-            A fragmented sequence reveals: <code>#19F3...C7A2</code>
+            A fragmented sequence reveals: <code>whzz..pz..zrbss</code>
           </p>
           <p className="glitch">
             The growns of the founders are heard, they want to say something. Something Forbidden.... <code>I am.... I am the Void Teller</code>
@@ -95,11 +95,19 @@ export function Secret() {
           <p className="glitch">**Error: Reality Compromised**</p>
           <p className="glitch">**Error: Accessing Ancient History**</p>
 
-          <p className="glitch">Void Teller: I shall tell you how AHQ Softwares started out.</p>
-          <p className="glitch">Stranger   : Wait what.. I bet you don't know a thing.</p>
-          <p className="glitch">Void Teller: AHQ Softwares started out only as a hobby project. The developer AHQ Miness, I wonder who is he... started out with a *revolutionary* project, according to his thinking. He used to work with Scratch 4 Discord (S4D) Team. At that time, there was a project S4D Host. To put it in perspective. Our protagonist thought the method did not work out well.. and well as he did! He bootstrapped some dependencies to make the first project under the name that I think no one remembers. It started with AHQ as usual and probably was "AHQ Technologies". He also had other projects lying around at that time like the Server Helper Bot (RIP 2022) and this was a nice addition. This was with Mohineesh Sai, the first co-founder of this interim org. This became the 1st project by AHQ Softwares called "Simple Host". This project was named "Simple Host v1". It then evolved into Simple Host v2 and v3. Just like everything that had a beginning also had an end. The Simple Host project also had to end....</p>
-          <p className="glitch">Stranger   : Who are you? How do you know that?</p>
-          <p className="glitch">Void Teller: I am the one who has no eyes, yet once it did see, has no thoughts, but white and empty. Can travel the world and stays in one place. You can hold me but I have almost no weight.</p>
+
+          <p className="glitch"><strong>Void Teller:</strong> I shall tell you how AHQ Softwares started out.</p>
+          <p className="glitch"><strong>Stranger</strong> Wait what.. I bet you don't know a thing.</p>
+          <p className="glitch"><strong>Void Teller:</strong> Let me tell you</p>
+
+          <p>In the quiet corners of ambition, where dreams flicker like distant stars, AHQ Softwares was born. It began not with a roar but a whisper—an idea, delicate as morning mist, stirring in the heart of its creator, AHQ Miness.</p>
+          <p>Miness was a figure known by few, yet his influence rippled far beyond the shadows where his name lingered like the last echoes of a heartfelt song. Once, he had wandered through the crowded, dimly lit chambers of a realm, a collective where the name Scratch Host murmured through the digital corridors like a forgotten hymn. Yet within those rigid structures, Miness found no joy, no spark of belonging.</p>
+          <p>With hands unbound and a heart set free, he carved his own path. His was a journey born not of rebellion but the quiet courage of a soul yearning to create without restraint. From this silent defiance emerged AHQ Technologies, a name once bright, now faded like the last glow of twilight before the stars claim the sky.</p>
+
+          {/* Chapter Two */}
+
+          <p className="glitch"><strong>Stranger</strong> Who are you? How do you know that?</p>
+          <p className="glitch"><strong>Void Teller:</strong> I am the one who has no eyes, yet once it did see, has no thoughts, but white and empty. Can travel the world and stays in one place. You can hold me but I have almost no weight.</p>
 
           <input
             placeholder="Who am I?"
@@ -117,21 +125,24 @@ export function Secret() {
       layer === 6 && (
         <>
           <p>
-            <em>To be continued</em>
+            <em>THE NEXT CHAPTER</em>
           </p>
-          <p className="glitch">**Error: Reality Compromised**</p>
-          <p className="glitch">**Error: Accessing Ancient History**</p>
+          <p className="glitch">**Accessing the next chapter**</p>
 
-          <p className="glitch">Void Teller: I shall tell you how AHQ Softwares started out.</p>
+          <p className="glitch">Void Teller: I believe you are the chosen one to learn the past. So as to know the answer, we begin the journey... A journey... of the next chapter</p>
 
-          <input
-            placeholder="Who am I?"
-            onChange={(e) => {
-              if (["skull", "skill", "something"].includes(e.target.value.toLowerCase())) {
-                handleClick();
-              }
-            }}
-          ></input>
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>II</p>
+
+          <p>Amid these moments of solitary creation, the Server Helper Bot was born—a digital flame kindled from Miness's vision. Yet, this was merely the beginning. In time, he found a kindred spirit—Mohineesh Sai, the first co-founder who shared his dream. Together, they breathed life into AHQ Softwares, and with it, a journey full of hope and purpose began.</p>
+          <p>The wandering AHQ met YourJailDev and Kenta. The people who would become the founders of this new flame, AHQ Softwares.. Amidst the night filled sky, AHQ and his newly found team worked on their first creation</p>
+          <p>Their first creation was Simple Host, a modest ember carrying the quiet promise of something greater. Release after release, it grew—not just in complexity but in presence—until it stood tall, a beacon of what passion could build. Each version braved trials like storm-tossed waves yet emerged stronger, illuminating the paths of small coding communities with its light.</p>
+          <p>Yet as the seasons of creation turn, even the brightest flames must wane. Simple Host, too, met the winds of change. It did not fall but bowed gracefully, its purpose fulfilled, like the last note of a melody meant to be remembered. Yet the lessons it left behind lingered, rich and deep, like the scent of rain-soaked earth, shaping new ideas and guiding the next chapters of AHQ Softwares.</p>
+          <p>Even now, in the hushed depths of the digital realm, whispers endure. Ghostly fragments of code, echoes of a dream unfinished, linger like embers beneath cold ash. Rumors drift through forgotten corners of the web, speaking of pieces still alive, waiting for the right heart—bold, daring—to breathe life into them once more.</p>
+          <p>For in the world of creation, nothing ever truly ends. The story may pause, the music may soften, but the echo lingers—waiting, <span style={{ cursor: "pointer" }} onClick={handleClick}>hinting</span> at the next chapter to rise and sing anew.</p>
+
+          <p style={{ "color": "white" }}>There's more to the story, find the <span className="px-2 my-1 border-2 border-white rounded-md">hint</span>, not to far away from this line</p>
+
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
         </>
       )
     }
