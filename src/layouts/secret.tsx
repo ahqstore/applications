@@ -95,6 +95,7 @@ export function Secret() {
           <p className="glitch">**Error: Reality Compromised**</p>
           <p className="glitch">**Error: Accessing Ancient History**</p>
 
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>II - THE UNKNOWN</p>
 
           <p className="glitch"><strong>Void Teller:</strong> I shall tell you how AHQ Softwares started out.</p>
           <p className="glitch"><strong>Stranger</strong> Wait what.. I bet you don't know a thing.</p>
@@ -185,6 +186,50 @@ export function Secret() {
           <p>Amid these challenges, a new tension arose. Voldigoad and EA envisioned a transformation for AHQ Softwares. They sought to reshape it into a company, a move that threatened to alter the very essence of the organization. Yet the brilliant founders—AHQ, JailDev, and Kenta—stood firm. With courage and conviction, they defended the nonprofit spirit of AHQ Softwares, ensuring it remained a sanctuary for creators, dreamers, and collaborators alike.</p>
           <p>Through trials and triumphs, AHQ Softwares proved that its heart lay not in profit but in passion. The unimaginable had tested their resolve, but their shared vision prevailed, and the story continued—a story of resilience, unity, and the unwavering belief that innovation is born from the heart.</p>
           <p>However, the chaos surrounding Simple Host v3 took its toll. After much deliberation, AHQ Softwares made the heartbreaking decision to shut down Simple Host. It was an end to an era, but not to their spirit. From the ashes of Simple Host, AHQ began to dream again. A new project stirred in their minds, one that carried the promise of innovation and hope—a new chapter waiting to be written in the saga of AHQ Softwares. <span className="read" style={{ cursor: "pointer" }} onClick={handleClick}>Read More</span></p>
+
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Slightly adridged</em></p>
+        </>
+      )
+    }
+
+    {
+      layer === 9 && (
+        <>
+          <p>
+            <em>THE NEW BEGINNING</em>
+          </p>
+          <p className="glitch">**Accessing the next chapter**</p>
+
+          <p>Void Teller:</p>
+
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>V - AHQ STORE</p>
+
+          <p>With the close of one chapter came the dawn of another. AHQ embarked on a bold new expedition—AHQ Store, a venture driven by the motto to make app distribution accessible to everyone. With unwavering determination, AHQ led the charge, joined by Kenta, JailDev, and other steadfast collaborators. Together, they worked tirelessly to bring this vision to life.</p>
+          <p>The first versions, AHQ Store v1 and v2, were launched with full support for Windows, marking a significant milestone. This effort was more than just a project; it was a beacon of accessibility in a complex digital landscape. Alongside this accomplishment, AHQ contributed back to the community, making valuable contributions to the Tauri framework—an acknowledgment of the tools that had supported AHQ Store’s development.</p>
+
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
+        </>
+      )
+    }
+
+    {
+      layer === 10 && (
+        <>
+          <p>
+            <em>THE PRESENT</em>
+          </p>
+          <p className="glitch">**Accessing the next chapter**</p>
+
+          <p>Void Teller:</p>
+
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>V - FURTHER INNOVATIONS</p>
+
+          <p>Kenta turned his attention back to Teplix, enhancing it into Teplix II. This upgraded AI robot embodied brilliance and innovation, setting a new standard for intelligent systems.</p>
+          <p>JailDev, too, showcased his ingenuity, building AHQ AI—a prototype intelligent Discord bot that hinted at the future of conversational AI.</p>
+          <p>Meanwhile, as AHQ Store grew, so did its ambitions. Initially restricted to Windows, the team expanded its reach with the introduction of AHQ Store NEO. This new iteration aimed to bring seamless app distribution to Windows, Linux, and Android, making accessibility not just a promise but a reality.</p>
+          <p>The spirit of creation did not stop there. AHQ Softwares ventured into uncharted territory, starting work on a programming language called LeadLang. With every line of code, they demonstrated their commitment to pushing the boundaries of technology.</p>
+          <p>Through it all, AHQ Softwares held steadfast to its core principles. The nonprofit organization, driven by passion and collaboration, continued to thrive. Its projects and innovations were not just milestones but reminders of what could be achieved when bold ideas meet unyielding dedication. The story of AHQ Softwares was far from over; its legacy continued to grow, inspiring all who dared to dream.</p>
+          <p>I am the Void Teller, an image of the organization created by AHQ</p>
 
           <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
         </>
