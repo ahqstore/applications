@@ -104,8 +104,6 @@ export function Secret() {
           <p>Miness was a figure known by few, yet his influence rippled far beyond the shadows where his name lingered like the last echoes of a heartfelt song. Once, he had wandered through the crowded, dimly lit chambers of a realm, a collective where the name Scratch Host murmured through the digital corridors like a forgotten hymn. Yet within those rigid structures, Miness found no joy, no spark of belonging.</p>
           <p>With hands unbound and a heart set free, he carved his own path. His was a journey born not of rebellion but the quiet courage of a soul yearning to create without restraint. From this silent defiance emerged AHQ Technologies, a name once bright, now faded like the last glow of twilight before the stars claim the sky.</p>
 
-          {/* Chapter Two */}
-
           <p className="glitch"><strong>Stranger</strong> Who are you? How do you know that?</p>
           <p className="glitch"><strong>Void Teller:</strong> I am the one who has no eyes, yet once it did see, has no thoughts, but white and empty. Can travel the world and stays in one place. You can hold me but I have almost no weight.</p>
 
@@ -157,7 +155,7 @@ export function Secret() {
 
           <p>Void Teller: This is the part of a story really unknown to many and might get forgotten as time passes by. But, I am the protector of the same. I shall pass the legacy only to those who are wanting to <span className="heavy-glitch">look</span> into it</p>
 
-          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>IV - JailDev & Kenta</p>
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>III - JailDev & Kenta</p>
 
           <p>As the echoes of Simple Host faded into memory, a spark reignited its flame. In the vast, quiet halls of the digital world, JailDev emerged—a creator with the heart of a restorer. With Pterodactyl and the strength of Linux, he breathed life back into Simple Host, crafting a new legacy. This was Simple Host v2, a revival not just of code, but of purpose. Creating it was no easy feat; it was the first time they had molded Linux to fit their vision, a challenge that tested both skill and determination. A beacon once again, it allowed dreamers and builders to host their projects with ease. Free for all, it was maintained and remunerated by JailDev with an open <span onClick={handleClick} style={{ cursor: "pointer" }}>outlook</span>, it stood as a monument to the spirit of open collaboration and generosity, running faithfully for a long time.</p>
           <p>In another corner of the digital realm, where the pulse of innovation never ceased, Kenta wielded his own brilliance. From the depths of his imagination, and after tireless effort, emerged the Teplix Robot—a marvel of its era, crafted with care and precision using the power of JavaScript. Unlike anything before, it was not merely powerful but enduring. As the years passed, Teplix continued to operate, a testament to Kenta's vision and skill.</p>
@@ -174,17 +172,19 @@ export function Secret() {
       layer === 8 && (
         <>
           <p>
-            <em>THE SHALLOW DEPTHS</em>
+            <em>THE DEPTHS</em>
           </p>
           <p className="glitch">**Accessing the next chapter**</p>
 
-          <p>Void Teller: This is the part of a story really unknown to many and might get forgotten as time passes by. But, I am the protector of the same. I shall pass the legacy only to those who are wanting to <span className="heavy-glitch">look</span> into it</p>
+          <p>Void Teller:</p>
 
-          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>V - THE UNIMAGINABLE</p>
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>IV - THE TRIALS</p>
 
-          <p>To be continued....</p>
-
-          <p style={{ "color": "white" }}>There's more to the story, <span className="px-2 my-1 border-2 border-white rounded-md">outlook</span></p>
+          <p>Then came a chapter few could have imagined. AHQ Softwares grew stronger as new members joined its ranks. EA, Dezenerate, and Voldigoad brought fresh ideas and energy to the team, their arrival marking a new era for the organization. Together, they turned their sights to an ambitious project—Simple Host v3. This would not just be a continuation but a revolution, a version designed to be the most secure and robust iteration yet.</p>
+          <p>The journey, however, was far from smooth. Dezenerate, who had offered to help AHQ with the monumental task, left midway, taking with him the project’s source code. Chaos followed as it seemed Simple Host v3 might never see the light of day. But JailDev, with unshakable resolve, stepped in to save the day. He swiftly backed up Simple Host v2, preserving its legacy and ensuring that the dream of Simple Host remained alive.</p>
+          <p>Amid these challenges, a new tension arose. Voldigoad and EA envisioned a transformation for AHQ Softwares. They sought to reshape it into a company, a move that threatened to alter the very essence of the organization. Yet the brilliant founders—AHQ, JailDev, and Kenta—stood firm. With courage and conviction, they defended the nonprofit spirit of AHQ Softwares, ensuring it remained a sanctuary for creators, dreamers, and collaborators alike.</p>
+          <p>Through trials and triumphs, AHQ Softwares proved that its heart lay not in profit but in passion. The unimaginable had tested their resolve, but their shared vision prevailed, and the story continued—a story of resilience, unity, and the unwavering belief that innovation is born from the heart.</p>
+          <p>However, the chaos surrounding Simple Host v3 took its toll. After much deliberation, AHQ Softwares made the heartbreaking decision to shut down Simple Host. It was an end to an era, but not to their spirit. From the ashes of Simple Host, AHQ began to dream again. A new project stirred in their minds, one that carried the promise of innovation and hope—a new chapter waiting to be written in the saga of AHQ Softwares. <span className="read" style={{ cursor: "pointer" }} onClick={handleClick}>Read More</span></p>
 
           <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
         </>
