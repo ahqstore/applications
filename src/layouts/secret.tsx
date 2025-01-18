@@ -231,7 +231,7 @@ export function Secret() {
           <p>Through it all, AHQ Softwares held steadfast to its core principles. The nonprofit organization, driven by passion and collaboration, continued to thrive. Its projects and innovations were not just milestones but reminders of what could be achieved when bold ideas meet unyielding dedication. The story of AHQ Softwares was far from over; its legacy continued to grow, inspiring all who dared to dream.</p>
           <p>I am the Void Teller, an image of the organization created by AHQ</p>
 
-          <p style={{ color: "gray", opacity: "0.25" }}><em>Slightly Abridged</em></p>
+          <p style={{ color: "yellow" }}><em>To the continued for as long as I can think....</em></p>
         </>
       )
     }
