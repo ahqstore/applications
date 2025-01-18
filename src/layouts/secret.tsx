@@ -239,6 +239,6 @@ export function Secret() {
     }
 
     <br />
-    <a href="/applications/">Return to Safety</a>
+    <a href="/applications/">{layer == 10 ? "Return to Home Page" : "Return to Safety"}</a>
   </>);
 }
