@@ -43,6 +43,23 @@ import "@/styles/base.css";
         opacity: 1;
       }
     }
+
+    .heavy-glitch {
+      animation: heavy-glitch 1.5s infinite alternate;
+    }
+
+    @keyframes heavy-glitch {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.2;
+        transform: skewX(-100deg);
+      }
+      100% {
+        opacity: 1;
+      }
+    }
   </style>
   <Secret client:only />
 </body>
