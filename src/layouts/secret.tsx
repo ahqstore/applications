@@ -207,7 +207,7 @@ export function Secret() {
           <p>With the close of one chapter came the dawn of another. AHQ embarked on a bold new expedition—AHQ Store, a venture driven by the motto to make app distribution accessible to everyone. With unwavering determination, AHQ led the charge, joined by Kenta, JailDev, and other steadfast collaborators. Together, they worked tirelessly to bring this vision to life.</p>
           <p>The first versions, AHQ Store v1 and v2, were launched with full support for Windows, marking a significant milestone. This effort was more than just a project; it was a beacon of accessibility in a complex digital landscape. Alongside this accomplishment, AHQ contributed back to the community, making valuable contributions to the Tauri framework—an acknowledgment of the tools that had supported AHQ Store’s development.</p>
 
-          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
+          <p style={{ color: "gray", opacity: "0.75" }} onClick={handleClick}><em>Explore the next chapter</em></p>
         </>
       )
     }
@@ -220,9 +220,9 @@ export function Secret() {
           </p>
           <p className="glitch">**Accessing the next chapter**</p>
 
-          <p>Void Teller:</p>
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>VI - FURTHER INNOVATIONS</p>
 
-          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}>V - FURTHER INNOVATIONS</p>
+          <p>Void Teller:</p>
 
           <p>Kenta turned his attention back to Teplix, enhancing it into Teplix II. This upgraded AI robot embodied brilliance and innovation, setting a new standard for intelligent systems.</p>
           <p>JailDev, too, showcased his ingenuity, building AHQ AI—a prototype intelligent Discord bot that hinted at the future of conversational AI.</p>
