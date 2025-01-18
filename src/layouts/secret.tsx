@@ -163,7 +163,7 @@ export function Secret() {
           <p>In another corner of the digital realm, where the pulse of innovation never ceased, Kenta wielded his own brilliance. From the depths of his imagination, and after tireless effort, emerged the Teplix Robot—a marvel of its era, crafted with care and precision using the power of JavaScript. Unlike anything before, it was not merely powerful but enduring. As the years passed, Teplix continued to operate, a testament to Kenta's vision and skill.</p>
           <p>The journeys of Simple Host v2 and Teplix Robot were not separate, but intertwined threads in the tapestry of creation. For the first time, all of these projects were united under a single banner—AHQ Softwares. They reminded all who came across them that innovation thrives when hearts are bold, and stories never truly end—they only pause, waiting for the next chapter to be written.</p>
 
-          <p style={{ "color": "white" }}>There's more to the story, find the <span className="px-2 my-1 border-2 border-white rounded-md">outlook</span> of the world to continue</p>
+          <p style={{ "color": "white" }}>There's more to the story, <span className="px-2 my-1 border-2 border-white rounded-md">look out</span> into the world to find the answer</p>
 
           <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
         </>
@@ -184,7 +184,7 @@ export function Secret() {
 
           <p>To be continued....</p>
 
-          <p style={{ "color": "white" }}>There's more to the story, find the <span className="px-2 my-1 border-2 border-white rounded-md">outlook</span> of the world to continue</p>
+          <p style={{ "color": "white" }}>There's more to the story, <span className="px-2 my-1 border-2 border-white rounded-md">outlook</span></p>
 
           <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
         </>
