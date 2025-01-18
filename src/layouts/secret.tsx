@@ -229,7 +229,9 @@ export function Secret() {
           <p>Meanwhile, as AHQ Store grew, so did its ambitions. Initially restricted to Windows, the team expanded its reach with the introduction of AHQ Store NEO. This new iteration aimed to bring seamless app distribution to Windows, Linux, and Android, making accessibility not just a promise but a reality.</p>
           <p>The spirit of creation did not stop there. AHQ Softwares ventured into uncharted territory, starting work on a programming language called LeadLang. With every line of code, they demonstrated their commitment to pushing the boundaries of technology.</p>
           <p>Through it all, AHQ Softwares held steadfast to its core principles. The nonprofit organization, driven by passion and collaboration, continued to thrive. Its projects and innovations were not just milestones but reminders of what could be achieved when bold ideas meet unyielding dedication. The story of AHQ Softwares was far from over; its legacy continued to grow, inspiring all who dared to dream.</p>
-          <p>I am the Void Teller, an image of the organization created by AHQ</p>
+          <p>I am the Void Teller, an image of the organization created by AHQ and we have finally reached</p>
+
+          <p style={{ lineHeight: "2.5rem", fontSize: "2.25rem" }}><em>THE PRESENT</em></p>
 
           <p style={{ color: "yellow" }}><em>To the continued for as long as I can think....</em></p>
         </>
