@@ -141,7 +141,7 @@ export function Secret() {
 
           <p style={{ "color": "white" }}>There's more to the story, find the <span className="px-2 my-1 border-2 border-white rounded-md">hint</span>, not to far away from this line</p>
 
-          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Slightly Abridged</em></p>
         </>
       )
     }
@@ -164,7 +164,7 @@ export function Secret() {
 
           <p style={{ "color": "white" }}>There's more to the story, <span className="px-2 my-1 border-2 border-white rounded-md heavy-glitch">look out</span> into the world to find the answer</p>
 
-          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Slightly Abridged</em></p>
         </>
       )
     }
@@ -231,7 +231,7 @@ export function Secret() {
           <p>Through it all, AHQ Softwares held steadfast to its core principles. The nonprofit organization, driven by passion and collaboration, continued to thrive. Its projects and innovations were not just milestones but reminders of what could be achieved when bold ideas meet unyielding dedication. The story of AHQ Softwares was far from over; its legacy continued to grow, inspiring all who dared to dream.</p>
           <p>I am the Void Teller, an image of the organization created by AHQ</p>
 
-          <p style={{ color: "gray", opacity: "0.25" }}><em>Simplified for clarity</em></p>
+          <p style={{ color: "gray", opacity: "0.25" }}><em>Slightly Abridged</em></p>
         </>
       )
     }
