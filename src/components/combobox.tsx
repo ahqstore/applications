@@ -31,14 +31,22 @@ import { MdErrorOutline } from "react-icons/md";
 import type { IconType } from "react-icons"
 
 import { cn } from "@/lib/utils"
-import type { System } from "@/hooks/use-os"
+import { type System } from "@/hooks/use-os"
 
 type Status = {
   label: string
   icon: React.ForwardRefExoticComponent<any> | IconType
 }
 
-const statuses: { [key in System]: Status } = {
+type DefStatuses = {
+  [key in System]: Status;
+};
+
+interface Statuses extends DefStatuses {
+  "loading": Status;
+}
+
+const statuses: Statuses = {
   "windows": {
     label: "Windows",
     icon: BsMicrosoft,
@@ -54,6 +62,10 @@ const statuses: { [key in System]: Status } = {
   "unsupported": {
     label: "Unsupported",
     icon: MdErrorOutline,
+  },
+  "loading": {
+    label: "Loading",
+    icon: FaLaptop
   }
 }
 
@@ -61,24 +73,31 @@ export function ComboBoxResponsive() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  const selectedStatus = statuses["unsupported"];
+  const [selectedStatus, setSelected] = React.useState(statuses["loading"]);
+
+  React.useEffect(() => {
+    const os_regex = /(?<=^\/applications\/)(windows|linux|android)/;
+
+    try {
+      const os = os_regex.exec(window.location.pathname)?.[0]!!;
+
+      if (Object.keys(statuses).includes(os)) {
+        // Safety: Is it valid as check the `if` statement
+        // @ts-ignore
+        setSelected(statuses[os]);
+      } else {
+        setSelected(statuses["unsupported"])
+      }
+    } catch (_) { }
+  }, []);
 
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? (
-              <>
-                <selectedStatus.icon className="mr-2 h-4 w-4 shrink-0" />
-                {selectedStatus.label}
-              </>
-            ) : (
-              <>
-                <FaLaptop className="mr-2 h-4 w-4 shrink-0" />
-                OS
-              </>
-            )}
+            <selectedStatus.icon className="mr-2 h-4 w-4 shrink-0" />
+            {selectedStatus.label}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
@@ -92,17 +111,8 @@ export function ComboBoxResponsive() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-[150px] justify-start">
-          {selectedStatus ? (
-            <>
-              <selectedStatus.icon className="mr-2 h-4 w-4 shrink-0" />
-              {selectedStatus.label}
-            </>
-          ) : (
-            <>
-              <FaLaptop className="mr-2 h-4 w-4 shrink-0" />
-              OS
-            </>
-          )}
+          <selectedStatus.icon className="mr-2 h-4 w-4 shrink-0" />
+          {selectedStatus.label}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -127,7 +137,7 @@ function StatusList({
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
-          {Object.entries(statuses).filter(([value,]) => value != "unsupported").map(([value, status]) => (
+          {Object.entries(statuses).filter(([value,]) => value != "unsupported" && value != "loading").map(([value, status]) => (
             <CommandItem
               key={value}
               value={value}

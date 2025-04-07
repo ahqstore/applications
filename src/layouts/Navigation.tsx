@@ -15,8 +15,11 @@ import { ComboBoxResponsive } from "@/components/combobox"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { MdSearch } from "react-icons/md"
+import { useOperatingSystem } from "@/hooks/use-os"
 
 export default function Nav() {
+  useOperatingSystem();
+
   return (
     <NavigationMenu className="max-h-16" style={{ maxHeight: "4rem" }}>
       <NavigationMenuList className="w-screen max-w-screen min-w-screen p-1 flex md:p-2">
