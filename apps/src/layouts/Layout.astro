@@ -1,0 +1,33 @@
+---
+interface Props {
+  title?: string;
+}
+
+import "../styles/global.css";
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/applications/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title ? `${title} | AHQ Store` : "AHQ Store"}</title>
+
+    <script>
+      const isNativeDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+      if (isNativeDark) {
+        document.querySelector("html")?.classList.add("dark");
+      }
+    </script>
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
