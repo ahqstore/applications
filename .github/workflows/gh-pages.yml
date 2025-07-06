@@ -21,23 +21,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Setup NodeJS
         uses: actions/setup-node@v4
-        
+
+      - name: Setup Rust
+        run: |
+          rustup default nightly
+
+      - name: Fetch Data
+        run: cargo run --release
+        working-directory: fetches
+
       - name: Build
         run: |
           npm i -g pnpm
           pnpm install
           pnpm build
-          
+        working-directory: apps
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: apps/dist
 
   deploy:
     environment:
