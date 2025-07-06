@@ -1,6 +1,7 @@
 export type System = "windows" | "android" | "linux" | "unsupported"
 
 export function useOperatingSystem(): System {
+  // @ts-ignore
   const agent = navigator.userAgent.toLowerCase();
 
   console.log(agent);
