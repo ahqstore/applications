@@ -1,0 +1,5 @@
+{
+	"devDependencies": {
+		"@tailwindcss/oxide": "^4.1.11"
+	}
+}
