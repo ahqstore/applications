@@ -1,0 +1,22 @@
+---
+import { SearchBox } from "@/components/react/SearchBox";
+import { NavBar } from "@/components/react/NavBar";
+
+import Layout from "@/layouts/Layout.astro";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+---
+
+<Layout>
+  <div class="flex flex-col w-screen h-screen overflow-hidden">
+    <nav class="w-screen">
+      <NavBar />
+    </nav>
+
+    <ScrollArea className="w-screen h-full">
+      <div class="flex flex-col w-screen h-full">
+        <SearchBox />
+      </div>
+    </ScrollArea>
+  </div>
+</Layout>
