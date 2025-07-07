@@ -1,6 +1,6 @@
 export interface Load {
   type: "Load"
-  entry: string;
+  entry: "windows" | "linux" | "fdroid";
 }
 
 export type WorkerMessage = Load;

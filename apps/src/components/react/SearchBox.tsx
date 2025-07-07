@@ -10,8 +10,6 @@ import {
 
 import { Search } from "lucide-react";
 
-import "./searchBox.css"
-
 export interface SearchBoxProps {
   children: React.ReactNode;
   pageType: "windows" | "linux" | "fdroid"
@@ -57,14 +55,14 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
       )}
 
       {/* Select Component */}
-      <Select value={pageType} onValueChange={(val) => window.location.pathname = `/applications/${val}`}>
+      <Select value={pageType} onValueChange={(val) => window.location.pathname = `/applications/${val != "fdroid" ? val : "android"}`}>
         <SelectTrigger className="hidden md:flex w-[7rem] h-5"> {/* Use h-5 consistently */}
           <SelectValue placeholder="Theme" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="windows">Windows</SelectItem>
           <SelectItem value="linux">Linux</SelectItem>
-          <SelectItem value="android">Android</SelectItem>
+          <SelectItem value="fdroid">Android</SelectItem>
         </SelectContent>
       </Select>
     </div>

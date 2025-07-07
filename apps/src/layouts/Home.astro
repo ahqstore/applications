@@ -1,0 +1,41 @@
+---
+interface Props {
+  pageType: "windows" | "linux" | "fdroid";
+}
+
+import Image from "astro/components/Image.astro";
+
+import { SearchBox } from "@/components/react/SearchBox";
+import { NavBar } from "@/components/react/NavBar";
+
+import Layout from "@/layouts/Layout.astro";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+import icon from "@/assets/1064x1064.png";
+
+const { pageType } = Astro.props;
+---
+
+<Layout>
+  <div class="flex flex-col w-screen h-screen overflow-hidden">
+    <nav class="w-screen">
+      <NavBar />
+    </nav>
+
+    <div class="flex flex-col w-screen h-full">
+      <SearchBox pageType={pageType} client:idle>
+        <Image
+          src={icon}
+          alt={"AHQ Store Logo"}
+          fetchpriority={"high"}
+          loading={"eager"}
+          class={"h-[2rem] w-[2rem] my-auto cursor-pointer hover:invert-[15%] transition-all"}
+          onclick={"window.location.href = 'https://ahqstore.github.io'"}
+        />
+      </SearchBox>
+
+      <ScrollArea className="w-screen h-full" />
+    </div>
+  </div>
+</Layout>

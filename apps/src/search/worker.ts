@@ -16,20 +16,29 @@ let miniSearch = new MiniSearch({
 
 onmessage = async (e: MessageEvent<WorkerMessage>) => {
   if (e.data.type == "Load") {
-    if (e.data.entry == "windows") {
-      const dataset = await fetch("/applications/jsondump/search_data_winget_json")
-        .then((r) => r.arrayBuffer());
+    const datasetName = (() => {
+      switch (e.data.entry) {
+        case "windows":
+          return "search_data_winget_json";
+        case "fdroid":
+          return "search_data_fdroid_json";
+        case "linux":
+          return "search_data_linux_json";
+      }
+    })();
 
-      const data = new Uint8Array(dataset);
-      const database = decode(data) as [string, string, string][];
+    const dataset = await fetch(`/applications/jsondump/${datasetName}`)
+      .then((r) => r.arrayBuffer());
 
-      const toData = database.map((s) => ({ name: s[0], title: s[1], id: s[2] }));
+    const data = new Uint8Array(dataset);
+    const database = decode(data) as [string, string, string][];
 
-      miniSearch.addAll(toData);
+    const toData = database.map((s) => ({ name: s[0], title: s[1], id: s[2] }));
 
-      console.log("Search data has been initialized");
+    miniSearch.addAll(toData);
 
-      postMessage("updated");
-    }
+    console.log("Search data has been initialized");
+
+    postMessage("updated");
   }
 }
