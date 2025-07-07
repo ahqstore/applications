@@ -57,7 +57,7 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
       {/* Select Component */}
       <Select value={pageType} onValueChange={(val) => window.location.pathname = `/applications/${val != "fdroid" ? val : "android"}`}>
         <SelectTrigger className="hidden md:flex w-[7rem] h-5"> {/* Use h-5 consistently */}
-          <SelectValue placeholder="Theme" />
+          <SelectValue placeholder="Site" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="windows">Windows</SelectItem>
