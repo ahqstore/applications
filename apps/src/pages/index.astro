@@ -13,10 +13,18 @@ import Layout from "@/layouts/Layout.astro";
     }
   </style>
 
+  <script>
+    import { getOperatingSystem } from "@/utils/os";
+
+    console.log(getOperatingSystem());
+  </script>
+
   <div class="showcase">
     <span class="dui-loading dui-loading-spinner dui-loading-5xl"></span>
 
-    <span class="text-xl font-mono mt-5">Redirecting, Please Wait...</span>
+    <span class="text-md md:text-xl font-mono mt-5"
+      >Redirecting, Please Wait...</span
+    >
     <span class="text-md font-mono mt-1">~0.1 sec</span>
   </div>
 </Layout>
