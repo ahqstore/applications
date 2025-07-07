@@ -1,7 +1,7 @@
 import type { WorkerMessage } from "./message";
 import MiniSearch from 'minisearch'
 
-import { decode } from "msgpack-lite"
+import { decode } from "@msgpack/msgpack"
 
 console.log("Hello from worker");
 
@@ -21,7 +21,7 @@ onmessage = async (e: MessageEvent<WorkerMessage>) => {
         .then((r) => r.arrayBuffer());
 
       const data = new Uint8Array(dataset);
-      const database: [string, string, string][] = decode(data);
+      const database = decode(data) as [string, string, string][];
 
       const toData = database.map((s) => ({ name: s[0], title: s[1], id: s[2] }));
 
