@@ -16,7 +16,22 @@ import Layout from "@/layouts/Layout.astro";
   <script>
     import { getOperatingSystem } from "@/utils/os";
 
-    console.log(getOperatingSystem());
+    const os = getOperatingSystem();
+
+    const redirect = (() => {
+      switch (os) {
+        case "Windows":
+          return "/applications/windows";
+        case "Android":
+          return "/applications/android";
+        case "Linux":
+          return "/applications/linux";
+        default:
+          return "/applications/select";
+      }
+    })();
+
+    window.location.pathname = redirect;
   </script>
 
   <div class="showcase">

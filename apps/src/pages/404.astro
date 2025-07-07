@@ -1,0 +1,34 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
+---
+
+<Layout title="Not Found">
+  <style>
+    .showcase {
+      @apply w-screen h-screen flex flex-col items-center justify-center;
+    }
+  </style>
+
+  <div class="showcase">
+    <Image
+      src="/applications/favicon.png"
+      width="140"
+      height="140"
+      class="mb-5"
+      alt="AHQ Store Logo"
+      loading="eager"
+    />
+
+    <div class="flex gap-2">
+      <span class="text-3xl text-primary font-bold">404:</span>
+      <span class="text-3xl font-semibold font-[system-ui]">Not found</span>
+    </div>
+
+    <div
+      class="text-transparent bg-transparent hover:text-primary-content border border-transparent hover:border-primary-content hover:bg-accent mt-3 px-2 py-1 rounded-md font-mono transition-all"
+    >
+      Probably something is missing somewhere?
+    </div>
+  </div>
+</Layout>
