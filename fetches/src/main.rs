@@ -121,6 +121,11 @@ async fn run() -> Option<()> {
 
   _ = create_dir("../apps/jsondump");
   
+  write("commit_ahqstore", &ahqstore).ok()?;
+  write("commit_win32", &winget).ok()?;
+  write("commit_fdroid", &fdroid).ok()?;
+  write("commit_linux", &linux).ok()?;
+
   write("home_win32.json", to_string_pretty(&win32_home).ok()?).ok()?;
   write("home_linux.json", to_string_pretty(&linux_home).ok()?).ok()?;
   write("home_fdroid.json", to_string_pretty(&fdroid_home).ok()?).ok()?;
