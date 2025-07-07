@@ -6,10 +6,7 @@ on:
 
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: write-all
 
 concurrency:
   group: "pages"
@@ -35,6 +32,8 @@ jobs:
       - name: Fetch Data
         run: cargo run --release
         working-directory: fetches
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
         run: |
