@@ -13,14 +13,17 @@ import ahqLogo from "@/assets/1064x1064.png"; // Adjust path as per your file st
   </style>
 
   <div class="showcase">
-    <Image
-      src={ahqLogo}
-      width="140"
-      height="140"
-      class="mb-5"
-      alt="AHQ Store Logo"
-      loading="eager"
-    />
+    <div class="w-32 md:w-40 lg:w-48">
+      <Image
+        src={ahqLogo}
+        layout="constrained"
+        width="512"
+        height="512"
+        class="mb-5"
+        alt="AHQ Store Logo"
+        loading="eager"
+      />
+    </div>
 
     <div class="flex gap-2">
       <span class="text-3xl text-primary font-bold">404:</span>
