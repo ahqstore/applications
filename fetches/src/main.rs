@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::to_string as to_string_pretty;
 
 fn write<C: AsRef<[u8]>>(path: &str, contents: C) -> std::io::Result<()> {
-  fswrite(format!("../apps/jsondump/{path}"), contents)
+  fswrite(format!("../apps/public/jsondump/{path}"), contents)
 }
 
 macro_rules! rgen {
@@ -119,7 +119,7 @@ async fn run() -> Option<()> {
     .await
     .ok()?;
 
-  _ = create_dir("../apps/jsondump");
+  _ = create_dir("../apps/public/jsondump");
   
   write("commit_ahqstore", &ahqstore).ok()?;
   write("commit_win32", &winget).ok()?;

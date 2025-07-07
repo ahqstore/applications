@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { SearchHost } from "@/search/search";
+import { useEffect, useState } from "react";
 //import { Input } from "../ui/input";
 
-export function SearchBox() {
-  const [data, setData] = useState(undefined);
+export interface SearchBoxProps {
+  pageType: "windows" | "linux" | "fdroid"
+}
+
+export function SearchBox(props: SearchBoxProps) {
+  const [data, setData] = useState<SearchHost | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const search = new SearchHost();
+
+      await search.load(props.pageType);
+
+      setData(search);
+    })();
+  }, []);
 
   if (!data) {
-    return <span>This is the search box</span>;
+    return <span>Loading</span>;
   }
 
-  return <></>;
+  return <>Search Box Loaded</>;
 }

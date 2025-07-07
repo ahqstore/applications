@@ -3,7 +3,7 @@ interface Props {
   title?: string;
 }
 
-import { ScrollBar } from "@/components/react/ScrollBar";
+import { RightClickMenu } from "@/components/react/RightClickMenu";
 import "../styles/global.css";
 
 const { title } = Astro.props;
@@ -35,8 +35,8 @@ const { title } = Astro.props;
   </head>
 
   <body>
-    <ScrollBar client:idle={{ timeout: 1000 }}>
+    <RightClickMenu client:idle>
       <slot />
-    </ScrollBar>
+    </RightClickMenu>
   </body>
 </html>

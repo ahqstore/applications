@@ -7,11 +7,11 @@ import {
 
 import type React from "react";
 
-interface ScrollBarProps {
+interface RightClickMenuprops {
   children: React.ReactNode[]
 }
 
-export function ScrollBar(props: ScrollBarProps) {
+export function RightClickMenu(props: RightClickMenuprops) {
   return <ContextMenu>
     <ContextMenuTrigger>{props.children}</ContextMenuTrigger>
     <ContextMenuContent>
