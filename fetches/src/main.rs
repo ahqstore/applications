@@ -40,7 +40,7 @@ macro_rules! rgen {
         
         write(
           stringify!([<map_data_ $x _json>]),
-          to_string_pretty(&map).ok()?
+          rmp_serde::encode::to_vec(&map).ok()?
         ).ok()?;
 
         println!("Generated map for {}", stringify!($x));
@@ -75,7 +75,7 @@ macro_rules! rgen {
 
           write(
             stringify!([<search_data_ $x _json>]),
-            to_string_pretty(&search).ok()?
+            rmp_serde::encode::to_vec(&search).ok()?
           ).ok()?;
 
           println!("Generated search data for {}", stringify!($x));

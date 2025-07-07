@@ -1,6 +1,8 @@
 import type { WorkerMessage } from "./message";
 import MiniSearch from 'minisearch'
 
+import { decode } from "msgpack-lite"
+
 console.log("Hello from worker");
 
 let miniSearch = new MiniSearch({
@@ -16,9 +18,14 @@ onmessage = async (e: MessageEvent<WorkerMessage>) => {
   if (e.data.type == "Load") {
     if (e.data.entry == "windows") {
       const dataset = await fetch("/applications/jsondump/search_data_winget_json")
-        .then((r) => r.json());
+        .then((r) => r.arrayBuffer());
 
-      miniSearch.addAll(dataset);
+      const data = new Uint8Array(dataset);
+      const database: [string, string, string][] = decode(data);
+
+      const toData = database.map((s) => ({ name: s[0], title: s[1], id: s[2] }));
+
+      miniSearch.addAll(toData);
 
       console.log("Search data has been initialized");
 
