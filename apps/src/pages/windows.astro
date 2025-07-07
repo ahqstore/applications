@@ -1,10 +1,14 @@
 ---
+import Image from "astro/components/Image.astro";
+
 import { SearchBox } from "@/components/react/SearchBox";
 import { NavBar } from "@/components/react/NavBar";
 
 import Layout from "@/layouts/Layout.astro";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+import icon from "@/assets/1064x1064.png";
 ---
 
 <Layout>
@@ -13,10 +17,19 @@ import { ScrollArea } from "@/components/ui/scroll-area";
       <NavBar />
     </nav>
 
-    <ScrollArea className="w-screen h-full">
-      <div class="flex flex-col w-screen h-full">
-        <SearchBox pageType="windows" client:visible />
-      </div>
-    </ScrollArea>
+    <div class="flex flex-col w-screen h-full">
+      <SearchBox pageType="windows" client:idle>
+        <Image
+          src={icon}
+          alt={"AHQ Store Logo"}
+          fetchpriority={"high"}
+          loading={"eager"}
+          class={"h-[2rem] w-[2rem] my-auto cursor-pointer hover:invert-[15%] transition-all"}
+          onclick={"window.location.href = 'https://ahqstore.github.io'"}
+        />
+      </SearchBox>
+
+      <ScrollArea className="w-screen h-full" />
+    </div>
   </div>
 </Layout>

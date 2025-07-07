@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.searchShell {
+  @apply w-64 h-[3.1rem] flex bg-secondary rounded-lg;
+}

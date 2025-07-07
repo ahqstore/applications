@@ -164,3 +164,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.dspl {
+  display: block;
+}
