@@ -5,8 +5,7 @@ export function SearchBox() {
   const [data, setData] = useState(undefined);
 
   if (!data) {
-    return <Input>
-    </Input>;
+    return <span>This is the search box</span>;
   }
 
   return <></>;
