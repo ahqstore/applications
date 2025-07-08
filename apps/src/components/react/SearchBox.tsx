@@ -101,7 +101,7 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
 
             const url = new URL(window.location.href);
 
-            if (value.length > 0) {
+            if (value.trim().length > 0) {
               url.searchParams.set("search", value);
               searchStore.set(value);
             } else {
