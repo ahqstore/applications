@@ -26,7 +26,7 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
   return (
     <div className="flex mt-3 w-screen md:px-3">
       {/* Nav for children */}
-      <nav className={`h-full justify-center items-center my-auto ${isLoading ? 'flex' : 'hidden md:flex'}`}>
+      <nav className={`h-full justify-center items-center my-auto hidden md:flex`}>
         {children}
       </nav>
 
