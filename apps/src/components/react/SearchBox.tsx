@@ -138,12 +138,12 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
       {/* Select Component */}
       <Select value={pageType} onValueChange={(val) => window.location.href = `/applications/${val != "fdroid" ? val : "android"}`}>
         <SelectTrigger className="hidden md:flex w-[7rem] h-5"> {/* Use h-5 consistently */}
-          <SelectValue placeholder="Site" />
+          <SelectValue aria-label={`You are currently viewing ${pageType} applist`} placeholder="Site" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="windows">Windows</SelectItem>
-          <SelectItem value="linux">Linux</SelectItem>
-          <SelectItem value="fdroid">Android</SelectItem>
+          <SelectItem aria-label="Set your viewing os to Windows" value="windows">Windows</SelectItem>
+          <SelectItem aria-label="Set your viewing os to Linux" value="linux">Linux</SelectItem>
+          <SelectItem aria-label="Set your viewing os to Android" value="fdroid">Android</SelectItem>
         </SelectContent>
       </Select>
     </div>
