@@ -1,5 +1,5 @@
 import { SearchHost } from "@/search/search";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select"
 
 import { Search } from "lucide-react";
+import { searchStore } from "@/search/searchStore";
 
 export interface SearchBoxProps {
   children: React.ReactNode;
@@ -23,6 +24,55 @@ interface CommonSearchElementsProps {
 }
 
 function CommonSearchElements({ children, pageType, isLoading }: CommonSearchElementsProps) {
+  const search = useRef<HTMLInputElement | null>(null);
+
+  const pushState = (uri: URL) => history.pushState(null, "AHQ Store", uri);
+
+  const [initialSearch, setInitialSearch] = useState(undefined as string | undefined);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+
+    const output = url.searchParams.get("search");
+
+    if (output && output.length > 0) {
+      setInitialSearch(output);
+      searchStore.set(output);
+    }
+  }, []);
+
+  useEffect(() => {
+    const listener = () => {
+      const url = new URL(window.location.href);
+      const output = url.searchParams.get("search") ?? "";
+
+      if (output.length == 0) {
+        if (search.current) {
+          search.current.value = "";
+        }
+        searchStore.set(undefined);
+
+
+        return;
+      }
+
+      // Change this
+      setInitialSearch(output);
+
+      if (search.current) {
+        // Forcefully update ofc
+        search.current.value = output;
+      }
+
+
+      searchStore.set(output);
+    };
+
+    window.addEventListener("popstate", listener);
+    return () => window.removeEventListener("popstate", listener);
+  }, []);
+
+
   return (
     <div className="flex mt-3 w-screen md:px-3">
       {/* Nav for children */}
@@ -42,20 +92,51 @@ function CommonSearchElements({ children, pageType, isLoading }: CommonSearchEle
           <Search className="absolute left-[calc(calc(var(--spacing)*2.5)+calc(var(--spacing)*4))] md:left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
         </div>
       ) : (
-        <form className="relative px-4 md:px-0 w-[98vw] max-w-[32rem] mx-auto">
+        <form
+          className="relative px-4 md:px-0 w-[98vw] max-w-[32rem] mx-auto"
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            const value = search.current!!.value;
+
+            const url = new URL(window.location.href);
+
+            if (value.length > 0) {
+              url.searchParams.set("search", value);
+              searchStore.set(value);
+            } else {
+              url.searchParams.delete("search");
+              searchStore.set(undefined);
+            }
+
+            pushState(url);
+          }}
+        >
           <input
             type="text"
             placeholder="Search for apps, games, and more"
             className="w-full py-3 pl-9 pr-3 bg-primary/10 rounded-xl border border-border focus:outline-none focus:ring-1 focus:ring-muted transition duration-300"
             minLength={3}
             maxLength={64}
+            ref={search}
+            onChange={(e) => {
+              if (e.target.value.trim() == "") {
+                const url = new URL(window.location.href);
+
+                url.searchParams.delete("search");
+                searchStore.set(undefined);
+
+                pushState(url);
+              }
+            }}
+            defaultValue={initialSearch}
           />
           <Search className="absolute left-[calc(calc(var(--spacing)*2.5)+calc(var(--spacing)*4))] md:left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
         </form>
       )}
 
       {/* Select Component */}
-      <Select value={pageType} onValueChange={(val) => window.location.pathname = `/applications/${val != "fdroid" ? val : "android"}`}>
+      <Select value={pageType} onValueChange={(val) => window.location.href = `/applications/${val != "fdroid" ? val : "android"}`}>
         <SelectTrigger className="hidden md:flex w-[7rem] h-5"> {/* Use h-5 consistently */}
           <SelectValue placeholder="Site" />
         </SelectTrigger>
