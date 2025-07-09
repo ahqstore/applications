@@ -90,10 +90,14 @@ jobs:
         run: tree
 
       - name: Build
+        shell: pwsh
         run: |
           npm i -g pnpm
           pnpm install
           pnpm build
+
+          Remove-Item -Path "./dist/api" -Recurse -Force
+          Copy-Item -Path "./public/api" -Destination "./dist/api" -Recurse
         working-directory: apps
 
       - name: Temp delete .gitignore
