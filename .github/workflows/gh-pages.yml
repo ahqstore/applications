@@ -41,6 +41,8 @@ jobs:
         id: commits
         shell: pwsh
         run: |
+          $GITHUB_OUTPUT=$env:GITHUB_OUTPUT
+
           echo "ahqstore=$(cat ./apps/public/jsondump/commit_ahqstore)" >> "$GITHUB_OUTPUT"
           echo "fdroid=$(cat ./apps/public/jsondump/commit_fdroid)" >> "$GITHUB_OUTPUT"
           echo "winget=$(cat ./apps/public/jsondump/commit_win32)" >> "$GITHUB_OUTPUT"
@@ -48,10 +50,10 @@ jobs:
 
       - name: Echo outputs
         run: |
-          echo "${{ steps.commits.outputs.ahqstore }}""
-          echo "${{ steps.commits.outputs.fdroid }}""
-          echo "${{ steps.commits.outputs.winget }}""
-          echo "${{ steps.commits.outputs.linux }}""
+          echo "${{ steps.commits.outputs.ahqstore }}"
+          echo "${{ steps.commits.outputs.fdroid }}"
+          echo "${{ steps.commits.outputs.winget }}"
+          echo "${{ steps.commits.outputs.linux }}"
 
       - name: Checkout Win32 Repo
         uses: actions/checkout@v4
