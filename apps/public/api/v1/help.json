@@ -1,5 +1,5 @@
 {
-  "/applications/api/v1/app/{prefix}/{application_id}.json": {
+  "/applications/api/v1/{prefix}/{application_id}.json": {
     "{prefix}": "Prefixes like `w`, `l`, `a`, `f`",
     "{application_id}": "Application id without the `w:`, `l:`, `a:`, `f:` prefix",
     "?": "Gets application information from our database"
