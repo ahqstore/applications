@@ -75,7 +75,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ahqstore/repo_android
-          path: repo_android
+          path: repo_fdroid
           ref: ${{ steps.commits.outputs.fdroid }}
 
       - name: Checkout AHQStore Repo
