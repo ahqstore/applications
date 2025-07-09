@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   build:
+    name: Build
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -93,6 +95,17 @@ jobs:
           pnpm install
           pnpm build
         working-directory: apps
+
+      - name: Temp delete .gitignore
+        shell: pwsh
+        run: |
+          rm .gitignore
+          rm apps/.gitignore
+
+      - name: Tree `dist` folder
+        shell: pwsh
+        run: tree
+        working-directory: apps/dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
