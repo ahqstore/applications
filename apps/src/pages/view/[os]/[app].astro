@@ -9,6 +9,7 @@ interface Props {
   prefix: string;
   app: string;
   template: string;
+  repoDir: string;
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
@@ -20,28 +21,32 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
       name: "map_data_ahqstore_json",
       app: "app_url_ahqstore",
       os: "community",
+      repo_dir: "repo_community",
     },
     {
       prefix: "l",
       name: "map_data_linux_json",
       app: "app_url_linux",
       os: "linux",
+      repo_dir: "repo_linux",
     },
     {
       prefix: "f",
       name: "map_data_fdroid_json",
       app: "app_url_fdroid",
       os: "android",
+      repo_dir: "repo_fdroid",
     },
     {
       prefix: "w",
       name: "map_data_winget_json",
       app: "app_url_winget",
       os: "win32",
+      repo_dir: "repo_win32",
     },
   ];
 
-  toFetch.forEach(({ name, os, app, prefix }) => {
+  toFetch.forEach(({ name, os, app, prefix, repo_dir }) => {
     const data = decode(
       readFileSync(
         join(import.meta.dirname, `../../../../public/jsondump/${name}`)
@@ -66,6 +71,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
           prefix,
           app: identifier,
           template: appUrl,
+          repoDir: repo_dir,
         },
       });
     });
@@ -74,10 +80,14 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   return output;
 }
 
-const { prefix, app, template } = Astro.props;
+const { prefix, repoDir, app, template } = Astro.props;
 
-const appInfo = await fetch(template.replace("{APP_ID}", app)).then(
-  async (s) => {
+console.log("Dev: ", import.meta.env.DEV);
+
+let appInfo;
+
+if (import.meta.env.DEV) {
+  appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
     if (!s.ok) {
       const body = await (await s.blob()).text();
       console.log(body);
@@ -85,15 +95,24 @@ const appInfo = await fetch(template.replace("{APP_ID}", app)).then(
       throw new Error("Received an error!");
     }
     return s.json();
-  }
-);
+  });
+} else {
+  const json = JSON.parse(
+    readFileSync(
+      join(import.meta.dirname, `../../../../../${repoDir}/db/apps/${app}`)
+    ).toString()
+  );
 
-const path = join(
-  import.meta.dirname,
-  `../../../../public/api/v1/${prefix}/${app}.json`
-);
+  // Actual appInfo loading
+  const path = join(
+    import.meta.dirname,
+    `../../../../public/api/v1/${prefix}/${app}.json`
+  );
 
-writeFileSync(path, JSON.stringify(appInfo));
+  writeFileSync(path, JSON.stringify(json));
+
+  appInfo = json;
+}
 ---
 
 <div>
