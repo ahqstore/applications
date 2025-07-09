@@ -3,6 +3,7 @@ import type { GetStaticPathsResult } from "astro";
 import { decode } from "@msgpack/msgpack";
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { stringify } from "smol-toml";
 import { join } from "node:path";
 
 interface Props {
@@ -82,8 +83,6 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 
 const { prefix, repoDir, app, template } = Astro.props;
 
-console.log("Dev: ", import.meta.env.DEV);
-
 let appInfo;
 
 if (import.meta.env.DEV) {
@@ -109,7 +108,19 @@ if (import.meta.env.DEV) {
     `../../../../public/api/v1/${prefix}/${app}.json`
   );
 
+  const path2 = join(
+    import.meta.dirname,
+    `../../../../public/api/v1/${prefix}/${app}`
+  );
+
+  const path4 = join(
+    import.meta.dirname,
+    `../../../../public/api/v1/${prefix}/${app}.toml`
+  );
+
   writeFileSync(path, JSON.stringify(json));
+  writeFileSync(path2, JSON.stringify(json));
+  writeFileSync(path3, stringify(json));
 
   appInfo = json;
 }
