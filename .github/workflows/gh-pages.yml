@@ -37,6 +37,47 @@ jobs:
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get Commit SHA
+        id: commits
+        shell: pwsh
+        run: |
+          echo "ahqstore=$(cat ./apps/public/jsondump/commit_ahqstore)" >> "$GITHUB_OUTPUT"
+          echo "fdroid=$(cat ./apps/public/jsondump/commit_fdroid)" >> "$GITHUB_OUTPUT"
+          echo "winget=$(cat ./apps/public/jsondump/commit_winget)" >> "$GITHUB_OUTPUT"
+          echo "linux=$(cat ./apps/public/jsondump/commit_linux)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Win32 Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ahqstore/repo_win32
+          path: repo_win32
+          ref: ${{ steps.commits.outputs.ahqstore }}
+
+      - name: Checkout Linux Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ahqstore/repo_linux
+          path: repo_linux
+          ref: ${{ steps.commits.outputs.linux }}
+
+      - name: Checkout FDroid Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ahqstore/repo_android
+          path: repo_android
+          ref: ${{ steps.commits.outputs.fdroid }}
+
+      - name: Checkout AHQStore Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ahqstore/repo_community
+          path: repo_community
+          ref: ${{ steps.commits.outputs.ahqstore }}
+
+      - name: Tree
+        shell: pwsh
+        run: tree
+
       - name: Build
         run: |
           npm i -g pnpm
