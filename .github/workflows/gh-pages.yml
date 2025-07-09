@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "ahqstore=$(cat ./apps/public/jsondump/commit_ahqstore)" >> "$GITHUB_OUTPUT"
           echo "fdroid=$(cat ./apps/public/jsondump/commit_fdroid)" >> "$GITHUB_OUTPUT"
-          echo "winget=$(cat ./apps/public/jsondump/commit_winget)" >> "$GITHUB_OUTPUT"
+          echo "winget=$(cat ./apps/public/jsondump/commit_win32)" >> "$GITHUB_OUTPUT"
           echo "linux=$(cat ./apps/public/jsondump/commit_linux)" >> "$GITHUB_OUTPUT"
 
       - name: Checkout Win32 Repo
@@ -51,7 +51,7 @@ jobs:
         with:
           repository: ahqstore/repo_win32
           path: repo_win32
-          ref: ${{ steps.commits.outputs.ahqstore }}
+          ref: ${{ steps.commits.outputs.winget }}
 
       - name: Checkout Linux Repo
         uses: actions/checkout@v4
