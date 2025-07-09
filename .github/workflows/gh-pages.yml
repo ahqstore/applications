@@ -41,10 +41,10 @@ jobs:
         id: commits
         shell: pwsh
         run: |
-          "ahqstore=$(cat ./apps/public/jsondump/commit_ahqstore)" >> "$GITHUB_OUTPUT"
-          "fdroid=$(cat ./apps/public/jsondump/commit_fdroid)" >> "$GITHUB_OUTPUT"
-          "winget=$(cat ./apps/public/jsondump/commit_win32)" >> "$GITHUB_OUTPUT"
-          "linux=$(cat ./apps/public/jsondump/commit_linux)" >> "$GITHUB_OUTPUT"
+          echo "ahqstore=$(cat ./apps/public/jsondump/commit_ahqstore)" >> "$GITHUB_OUTPUT"
+          echo "fdroid=$(cat ./apps/public/jsondump/commit_fdroid)" >> "$GITHUB_OUTPUT"
+          echo "winget=$(cat ./apps/public/jsondump/commit_win32)" >> "$GITHUB_OUTPUT"
+          echo "linux=$(cat ./apps/public/jsondump/commit_linux)" >> "$GITHUB_OUTPUT"
 
       - name: Echo outputs
         run: |
