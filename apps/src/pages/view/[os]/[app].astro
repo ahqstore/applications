@@ -1,0 +1,93 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import { decode } from "@msgpack/msgpack";
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+
+interface Props {
+  prefix: string;
+  app: string;
+  template: string;
+}
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+  const output: GetStaticPathsResult = [];
+
+  const toFetch = [
+    {
+      prefix: "a",
+      name: "map_data_ahqstore_json",
+      app: "app_url_ahqstore",
+      os: "community",
+    },
+    {
+      prefix: "l",
+      name: "map_data_linux_json",
+      app: "app_url_linux",
+      os: "linux",
+    },
+    {
+      prefix: "f",
+      name: "map_data_fdroid_json",
+      app: "app_url_fdroid",
+      os: "android",
+    },
+    {
+      prefix: "w",
+      name: "map_data_winget_json",
+      app: "app_url_winget",
+      os: "win32",
+    },
+  ];
+
+  toFetch.forEach(({ name, os, app, prefix }) => {
+    const data = decode(
+      readFileSync(
+        join(import.meta.dirname, `../../../../public/jsondump/${name}`)
+      )
+    ) as string[];
+
+    const appUrl = readFileSync(
+      join(import.meta.dirname, `../../../../public/jsondump/${app}`)
+    ).toString();
+
+    data.forEach((id) => {
+      const data = /.:(.*)/;
+
+      const identifier = data.exec(id)!![1];
+
+      output.push({
+        params: {
+          os,
+          app: identifier,
+        },
+        props: {
+          prefix,
+          app: identifier,
+          template: appUrl,
+        },
+      });
+    });
+  });
+
+  return output;
+}
+
+const { prefix, app, template } = Astro.props;
+
+const appInfo = await fetch(template.replace("{APP_ID}", app)).then((s) =>
+  s.json()
+);
+
+const path = join(
+  import.meta.dirname,
+  `../../../../public/api/v1/${prefix}/${app}.json`
+);
+
+writeFileSync(path, JSON.stringify(appInfo));
+---
+
+<div>
+  {JSON.stringify(appInfo, null, 4)}
+</div>

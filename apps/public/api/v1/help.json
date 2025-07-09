@@ -5,6 +5,7 @@
     "?": "Gets application information from our database"
   },
   "/applications/api/v1/user/{}.json": {
-    "status": "Not Yet ready"
+    "status": "Not Yet ready",
+    "eta": "NA"
   }
 }

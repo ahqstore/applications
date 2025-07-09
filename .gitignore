@@ -1,3 +1,9 @@
+# Ignore the app json files produced
+apps/public/api/*/**/a/**/*.json
+apps/public/api/*/**/l/**/*.json
+apps/public/api/*/**/f/**/*.json
+apps/public/api/*/**/w/**/*.json
+
 # build output
 dist/
 # generated types
