@@ -1,10 +1,10 @@
 ---
+import { RightClickMenu } from "@/components/react/RightClickMenu";
+import "../styles/global.css";
+
 interface Props {
   title?: string;
 }
-
-import { RightClickMenu } from "@/components/react/RightClickMenu";
-import "../styles/global.css";
 
 const { title } = Astro.props;
 ---
@@ -13,8 +13,9 @@ const { title } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/applications/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <meta
       name="description"

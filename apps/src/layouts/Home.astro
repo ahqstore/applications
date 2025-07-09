@@ -1,6 +1,9 @@
 ---
+import type { HomeData } from "@/utils/interfaces/home";
+
 interface Props {
   pageType: "windows" | "linux" | "fdroid";
+  homeData: HomeData;
 }
 
 import Image from "astro/components/Image.astro";

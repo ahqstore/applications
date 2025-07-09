@@ -1,5 +1,18 @@
 ---
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import type { HomeData } from "@/utils/interfaces/home";
+
 import Home from "@/layouts/Home.astro";
+
+const check: HomeData = JSON.parse(
+  readFileSync(
+    join(import.meta.dirname, "../../public/jsondump/home_win32.json")
+  ).toString()
+);
+
+console.log(check);
 ---
 
-<Home pageType="windows" />
+<Home pageType="windows" homeData={check} />

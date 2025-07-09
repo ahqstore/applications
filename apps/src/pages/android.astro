@@ -1,5 +1,18 @@
 ---
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import type { HomeData } from "@/utils/interfaces/home";
+
 import Home from "@/layouts/Home.astro";
+
+const check: HomeData = JSON.parse(
+  readFileSync(
+    join(import.meta.dirname, "../../public/jsondump/home_fdroid.json")
+  ).toString()
+);
+
+console.log(check);
 ---
 
-<Home pageType="fdroid" />
+<Home pageType="fdroid" homeData={check} />
