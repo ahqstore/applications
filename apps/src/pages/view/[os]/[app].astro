@@ -99,7 +99,7 @@ if (import.meta.env.DEV) {
 } else {
   const json = JSON.parse(
     readFileSync(
-      join(import.meta.dirname, `../../../../../${repoDir}/db/apps/${app}`)
+      join(import.meta.dirname, `../../../../../${repoDir}/db/apps/${app}.json`)
     ).toString()
   );
 
