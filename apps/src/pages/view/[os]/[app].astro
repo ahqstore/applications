@@ -5,6 +5,7 @@ import { decode } from "@msgpack/msgpack";
 import { readFileSync, writeFileSync } from "node:fs";
 import { stringify } from "smol-toml";
 import { join } from "node:path";
+import AppLayout from "@/layouts/AppLayout.astro";
 
 interface Props {
   prefix: string;
@@ -126,6 +127,6 @@ if (import.meta.env.DEV) {
 }
 ---
 
-<div>
+<AppLayout>
   {JSON.stringify(appInfo, null, 4)}
-</div>
+</AppLayout>

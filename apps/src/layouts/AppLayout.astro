@@ -1,10 +1,5 @@
 ---
-import type { HomeData } from "@/utils/interfaces/home";
-
-interface Props {
-  pageType: "windows" | "linux" | "fdroid";
-  homeData: HomeData;
-}
+interface Props {}
 
 import Image from "astro/components/Image.astro";
 
@@ -16,13 +11,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import icon from "@/assets/1064x1064.png";
 
-const { pageType } = Astro.props;
+const {} = Astro.props;
 ---
 
 <Layout>
   <div class="flex flex-col w-screen h-screen overflow-hidden">
     <div class="flex flex-col w-screen h-full">
-      <SearchBox pageType={pageType} client:idle>
+      <SearchBox pageType={"none"} client:idle>
         <Image
           src={icon}
           alt={"AHQ Store Logo"}
@@ -33,7 +28,9 @@ const { pageType } = Astro.props;
         />
       </SearchBox>
 
-      <ScrollArea className="w-screen h-full" />
+      <ScrollArea className="w-screen h-full">
+        <slot />
+      </ScrollArea>
     </div>
   </div>
 </Layout>
