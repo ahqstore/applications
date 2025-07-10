@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/1064x1064.png";
+import { Separator } from "@/components/ui/separator";
+
+const year = new Date().getFullYear();
+---
+
+<Separator client:visible />
+<footer
+  class="w-screen flex flex-col md:flex-row gap-2 px-2 py-2 text-muted-foreground"
+>
+  <div class="flex flex-col w-full">
+    <section class="flex gap-1 w-full">
+      <Image
+        src={logo}
+        alt="AHQ Store Logo"
+        width="32"
+        height="32"
+        class="min-w-[32px] min-h-[32px] grayscale-100"
+      />
+      <span class="text-2xl font-mono font-semibold">AHQ Store</span>
+    </section>
+  </div>
+  <div></div>
+</footer>
+<Separator client:visible />
+<section class="h-16 flex items-center px-2 text-muted-foreground font-sans">
+  <span>With ❤️ from AHQ Softwares {year} </span>
+</section>
