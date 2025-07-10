@@ -6,6 +6,8 @@ interface Props {
   title?: string;
 }
 
+const isDev = import.meta.env.DEV;
+
 const { title } = Astro.props;
 ---
 
@@ -36,8 +38,14 @@ const { title } = Astro.props;
   </head>
 
   <body>
-    <RightClickMenu client:visible>
-      <slot />
-    </RightClickMenu>
+    {
+      isDev ? (
+        <slot />
+      ) : (
+        <RightClickMenu client:visible>
+          <slot />
+        </RightClickMenu>
+      )
+    }
   </body>
 </html>

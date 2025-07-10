@@ -13,8 +13,6 @@ import { SearchBox } from "@/components/react/SearchBox";
 
 import Layout from "@/layouts/Layout.astro";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
-
 import icon from "@/assets/1064x1064.png";
 import Footer from "./Footer.astro";
 
@@ -35,9 +33,12 @@ const { pageType, footer } = Astro.props;
         />
       </SearchBox>
 
-      <ScrollArea className="w-screen h-[calc(100%-3rem)] py-2" client:visible>
+      <div class="w-screen h-[calc(100%-3rem)] flex flex-col">
+        <div class="w-full h-full mb-auto">
+          <slot />
+        </div>
         {footer && <Footer />}
-      </ScrollArea>
+      </div>
     </div>
   </div>
 </Layout>

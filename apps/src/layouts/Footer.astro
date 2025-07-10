@@ -8,23 +8,44 @@ const year = new Date().getFullYear();
 
 <Separator client:visible />
 <footer
-  class="w-screen flex flex-col md:flex-row gap-2 px-2 py-2 text-muted-foreground"
+  class="mt-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-8 text-muted-foreground bg-muted border-t border-muted"
 >
-  <div class="flex flex-col w-full">
-    <section class="flex gap-1 w-full">
+  <div class="flex flex-col items-center md:items-start gap-2">
+    <section class="flex items-center gap-2">
       <Image
         src={logo}
         alt="AHQ Store Logo"
-        width="32"
-        height="32"
-        class="min-w-[32px] min-h-[32px] grayscale-100"
+        width="40"
+        height="40"
+        class="min-w-[40px] min-h-[40px] grayscale"
       />
-      <span class="text-2xl font-mono font-semibold">AHQ Store</span>
+      <span class="text-3xl font-mono font-bold text-muted-foreground"
+        >AHQ Store</span
+      >
     </section>
+    <p class="text-sm text-center md:text-left">
+      Fully managed Distribution for your apps. The Open Sourced Store App
+      designed for devs, by devs, from devs.
+    </p>
   </div>
-  <div></div>
+
+  <div class="flex flex-col items-center md:items-end gap-2">
+    <section class="flex gap-4">
+      <a
+        href="/applications/api/v1/help.json"
+        class="hover:text-primary transition-colors">API</a
+      >
+      <a
+        href="https://ahqstore.github.io/tos/index.html"
+        class="hover:text-primary transition-colors">TOS</a
+      >
+      <a
+        href="https://ahqstore.github.io/privacy/index.html"
+        class="hover:text-primary transition-colors">Privacy Policy</a
+      >
+    </section>
+    <span class="text-sm text-center md:text-right mt-4">
+      &copy; {year} AHQ Softwares. All rights reserved.
+    </span>
+  </div>
 </footer>
-<Separator client:visible />
-<section class="h-16 flex items-center px-2 text-muted-foreground font-sans">
-  <span>With ❤️ from AHQ Softwares {year} </span>
-</section>
