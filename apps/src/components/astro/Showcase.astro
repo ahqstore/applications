@@ -110,6 +110,7 @@ import { ChevronRight } from "lucide-react";
               height={splashHero!!.attributes.height}
               width={splashHero!!.attributes.width}
               loading="eager"
+              decoding="async"
               fetchpriority="high"
               class="absolute !select-none !object-cover"
             />
@@ -146,6 +147,7 @@ import { ChevronRight } from "lucide-react";
                 width={splashSub!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
+                decoding="async"
               />
             </a>
 
@@ -163,7 +165,7 @@ import { ChevronRight } from "lucide-react";
                 width={splashThird!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
-                decoding="sync"
+                decoding="async"
               />
             </a>
 
