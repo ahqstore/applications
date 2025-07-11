@@ -1,8 +1,8 @@
 @reference "../../styles/global.css";
 
 :root {
-  --win32-accent: "red"
-    --color-neutral-content: "red"
+  --win32-accent: "red";
+  --color-neutral-content: "red";
 }
 
 .hero {
@@ -13,19 +13,8 @@
 }
 
 
-.hero>img {
+.hero img {
   @apply absolute top-0 left-0 w-full h-80 lg:h-96 z-1;
-}
-
-.hero>img:before {
-  content: "";
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 0, 0, 0.5);
-  z-index: 2;
 }
 
 .hero h1 {

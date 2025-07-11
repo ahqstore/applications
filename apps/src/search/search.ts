@@ -27,3 +27,5 @@ export class SearchHost {
     });
   }
 }
+
+export const searchWorker = new SearchHost();

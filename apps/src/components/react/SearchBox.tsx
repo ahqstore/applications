@@ -1,4 +1,3 @@
-import { SearchHost } from "@/search/search";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Select,
@@ -153,15 +152,15 @@ function CommonSearchElements({ children, pageType, isLoading, waste }: CommonSe
 }
 
 export function SearchBox(props: SearchBoxProps) {
-  const [data, setData] = useState<SearchHost | undefined>(undefined);
-  const isLoading = data === undefined; // Derive isLoading state
+  const [isLoading, setIsLoaded] = useState(true); // Derive isLoading state
 
   useEffect(() => {
     if (props.pageType != "none") {
       (async () => {
-        const search = new SearchHost();
-        await search.load(props.pageType);
-        setData(search);
+        const { searchWorker } = await import("@/search/search");
+        await searchWorker.load(props.pageType);
+
+        setIsLoaded(false);
       })();
     }
   }, [props.pageType]);

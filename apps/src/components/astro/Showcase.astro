@@ -99,11 +99,15 @@ import { ChevronRight } from "lucide-react";
     });
 </script>
 
+<style>
+  @import "./showcase.css";
+</style>
+
 <div class="px-2">
   {
     splash && (
       <>
-        <div class="flex flex-col mt-3 lg:flex-row grow-0 w-full gap-5 animate">
+        <div class="flex flex-col mt-3 lg:flex-row grow-0 w-full gap-5 animate hide_when_searching">
           <div id="hero" class="hero" data-app-id={splash.hero.appId}>
             <Image
               src={splashHero!!.src}
@@ -114,13 +118,12 @@ import { ChevronRight } from "lucide-react";
               loading="eager"
               decoding="async"
               fetchpriority="high"
+              style="filter: brightness(0.75);"
               class="absolute !select-none !object-cover"
             />
             <div class="relative z-5 flex flex-col h-full">
-              <h1>{splash.hero.title}</h1>
-              <h2 class="!text-black dark:!text-white">
-                {splash.hero.description}
-              </h2>
+              <h1 class="!text-white">{splash.hero.title}</h1>
+              <h2 class="!text-white">{splash.hero.description}</h2>
 
               <div class="w-full">
                 <a
@@ -130,7 +133,9 @@ import { ChevronRight } from "lucide-react";
                 </a>
               </div>
 
-              <h3 class="mt-auto mb-2 hidden md:block">{splash.hero.author}</h3>
+              <h3 class="mt-auto mb-2 hidden md:block !text-white">
+                {splash.hero.author}
+              </h3>
             </div>
           </div>
 
@@ -196,7 +201,7 @@ import { ChevronRight } from "lucide-react";
 
   {
     home?.map((apps) => (
-      <div class="home_apps">
+      <div class="home_apps hide_when_searching">
         <div>
           <span>{apps[0]}</span>
           {/* Re-integrated Lucide ChevronRight */}
@@ -216,10 +221,3 @@ import { ChevronRight } from "lucide-react";
     ))
   }
 </div>
-
-<style>
-  /* Import the existing CSS file */
-  @import "./showcase.css";
-
-  /* Add any additional Astro-specific styles here if needed */
-</style>
