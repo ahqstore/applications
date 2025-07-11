@@ -1,5 +1,4 @@
 import type { HomeData } from "@/utils/interfaces/home";
-import { Search } from "lucide-react";
 
 import { ChevronRight } from "lucide-react";
 
@@ -10,7 +9,8 @@ export interface ShowcaseProps {
 }
 
 const identMap: { [key: string]: string } = {
-  "w": "win32"
+  "w": "win32",
+  "a": "community"
 };
 
 export function Showcase({ data }: ShowcaseProps) {
@@ -36,26 +36,26 @@ export function Showcase({ data }: ShowcaseProps) {
         </div>
 
         <div className="cards">
-          <div>
+          <a href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}>
             <div style={{ color: splash.subhero.color }}>
               {splash.subhero.title}
             </div>
             <img src={splash.subhero.background} alt="Background" />
-          </div>
+          </a>
 
-          <div>
+          <a href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}>
             <div style={{ color: splash.third.color }}>
               {splash.third.title}
             </div>
             <img src={splash.third.background} alt="background" />
-          </div>
+          </a>
 
-          <div>
+          <a href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}>
             <div style={{ color: splash.fourth.color }}>
               {splash.fourth.title}
             </div>
             <img src={splash.fourth.background} alt="background" />
-          </div>
+          </a>
         </div>
       </div>
     </>}

@@ -1,0 +1,114 @@
+---
+import type { HomeData } from "@/utils/interfaces/home";
+
+export interface Props {
+  data: HomeData;
+}
+
+// Access props directly from Astro.props
+const { data } = Astro.props;
+
+const identMap: { [key: string]: string } = {
+  w: "win32",
+  a: "community",
+};
+
+const home = data.home;
+const splash = data.splash;
+
+console.log(splash); // This will log on the server during build
+
+// Import ChevronRight from lucide-react. This will be used in the client-side React component.
+import { ChevronRight } from "lucide-react";
+---
+
+<div class="px-2">
+  {
+    splash && (
+      <>
+        <div class="flex flex-col mt-3 lg:flex-row grow-0 w-full gap-5 animate">
+          <div
+            class="hero"
+            style={{
+              background: `url("${splash.hero.background}") center/cover`,
+            }}
+          >
+            <div />
+            <div class="flex flex-col h-full">
+              <h1>{splash.hero.title}</h1>
+              <h2 class="">{splash.hero.description}</h2>
+
+              <div class="w-full">
+                <a
+                  href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}
+                >
+                  {splash.hero.button}
+                </a>
+              </div>
+
+              <h3 class="mt-auto mb-2 hidden md:block">{splash.hero.author}</h3>
+            </div>
+          </div>
+
+          <div class="cards">
+            <a
+              href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}
+            >
+              <div style={{ color: splash.subhero.color }}>
+                {splash.subhero.title}
+              </div>
+              <img src={splash.subhero.background} alt="Background" />
+            </a>
+
+            <a
+              href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}
+            >
+              <div style={{ color: splash.third.color }}>
+                {splash.third.title}
+              </div>
+              <img src={splash.third.background} alt="background" />
+            </a>
+
+            <a
+              href={`/applications/view/${identMap[splash.hero.appId[0]]}/${splash.hero.appId.substring(2)}`}
+            >
+              <div style={{ color: splash.fourth.color }}>
+                {splash.fourth.title}
+              </div>
+              <img src={splash.fourth.background} alt="background" />
+            </a>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  {
+    home?.map((apps) => (
+      <div class="home_apps">
+        <div>
+          <span>{apps[0]}</span>
+          {/* Re-integrated Lucide ChevronRight */}
+          <ChevronRight className="arrow" />
+          <button class="all">
+            <span>All</span>
+            {/* Re-integrated Lucide ChevronRight */}
+            <ChevronRight className="arrow" />
+          </button>
+        </div>
+        <div>
+          {apps[1].map((app) => (
+            <div>{app}</div>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  /* Import the existing CSS file */
+  @import "./showcase.css";
+
+  /* Add any additional Astro-specific styles here if needed */
+</style>
