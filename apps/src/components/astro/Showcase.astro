@@ -74,8 +74,6 @@ if (splash) {
   ]);
 }
 
-console.log(splashSub);
-
 // Import ChevronRight from lucide-react. This will be used in the client-side React component.
 import { ChevronRight } from "lucide-react";
 ---
@@ -104,16 +102,18 @@ import { ChevronRight } from "lucide-react";
     splash && (
       <>
         <div class="flex flex-col mt-3 lg:flex-row grow-0 w-full gap-5 animate">
-          <div
-            id="hero"
-            class="hero"
-            style={{
-              background: `url("${splashHero!!.src}") center/cover`,
-            }}
-            data-app-id={splash.hero.appId}
-          >
-            <div />
-            <div class="flex flex-col h-full">
+          <div id="hero" class="hero" data-app-id={splash.hero.appId}>
+            <Image
+              src={splashHero!!.src}
+              srcset={splashHero!!.srcSet.attribute}
+              alt="Background"
+              height={splashHero!!.attributes.height}
+              width={splashHero!!.attributes.width}
+              loading="eager"
+              fetchpriority="high"
+              class="absolute !select-none !object-cover"
+            />
+            <div class="relative z-5 flex flex-col h-full">
               <h1>{splash.hero.title}</h1>
               <h2 class="!text-black dark:!text-white">
                 {splash.hero.description}
@@ -146,7 +146,6 @@ import { ChevronRight } from "lucide-react";
                 width={splashSub!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
-                decoding="async"
               />
             </a>
 
@@ -164,7 +163,7 @@ import { ChevronRight } from "lucide-react";
                 width={splashThird!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
-                decoding="async"
+                decoding="sync"
               />
             </a>
 
@@ -182,7 +181,7 @@ import { ChevronRight } from "lucide-react";
                 width={splashFourth!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
-                decoding="async"
+                decoding="sync"
               />
             </a>
           </div>
