@@ -99,6 +99,7 @@ import { ChevronRight } from "lucide-react";
                 src={splash.subhero.background}
                 alt="Background"
                 inferSize
+                loading="eager"
               />
             </a>
 
@@ -108,7 +109,12 @@ import { ChevronRight } from "lucide-react";
               <div style={{ color: splash.third.color }}>
                 {splash.third.title}
               </div>
-              <Image src={splash.third.background} alt="background" inferSize />
+              <Image
+                src={splash.third.background}
+                alt="background"
+                inferSize
+                loading="eager"
+              />
             </a>
 
             <a
@@ -121,6 +127,7 @@ import { ChevronRight } from "lucide-react";
                 src={splash.fourth.background}
                 alt="Background"
                 inferSize
+                loading="eager"
               />
             </a>
           </div>
