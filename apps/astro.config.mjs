@@ -13,13 +13,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   image: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*.github.com",
-        pathname: "ahqstore/**",
-      },
-    ],
+    domains: ["github.com"],
   },
   integrations: [react()],
 });
