@@ -1,0 +1,140 @@
+@reference "../../styles/global.css";
+
+:root {
+  --win32-accent: "red"
+    --color-neutral-content: "red"
+}
+
+.hero {
+  @apply min-w-full max-w-full lg:min-w-[58%] lg:max-w-[58%] xl:min-w-[65%] xl:max-w-[65%] lg:h-96 md:h-80 h-40 rounded-lg;
+
+  @apply overflow-hidden flex p-6 relative;
+  align-items: flex-start;
+}
+
+.hero div:nth-child(1) {
+  @apply absolute top-0 left-0 w-full h-80 lg:h-96 z-0 from-secondary/70 to-primary/15 bg-gradient-to-br;
+}
+
+.hero div:nth-child(2) {
+  @apply relative z-1;
+  font-family: Arial, sans-serif;
+}
+
+.hero h1 {
+  @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold;
+}
+
+.hero h2 {
+  @apply text-primary/60 text-lg;
+}
+
+.hero a {
+  @apply hidden md:block w-fit relative overflow-hidden mt-12 rounded-xl bg-primary text-primary-foreground text-xl py-2 px-6 cursor-pointer transition-transform duration-200 ease-in-out backdrop-blur-md shadow-md;
+}
+
+.hero a:hover {
+  @apply scale-105;
+  box-shadow: 0 0 24px color-mix(in oklab, var(--primary) 80%, transparent);
+}
+
+.hero a:active {
+  @apply scale-90;
+}
+
+.cards {
+  @apply max-h-[100%] grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-5 w-full;
+}
+
+.cards>div {
+  @apply w-[2fr] h-[1fr] min-h-24 rounded-lg lg:hover:translate-[-3px] cursor-pointer bg-accent-foreground/10 relative;
+}
+
+.cards>div>div:nth-child(1) {
+  font-family: Arial, sans-serif;
+  @apply absolute z-0 w-full h-full left-0 top-0 rounded-lg;
+  @apply from-primary-foreground/10 hover:from-primary-foreground/0 via-primary-foreground/10 to-primary-foreground/40 bg-gradient-to-br;
+
+  @apply flex flex-col items-end justify-end p-2 px-4;
+  @apply text-xl md:text-muted font-bold;
+}
+
+.cards>div:nth-child(1) {
+  @apply col-span-2 min-h-[1fr] max-h-[1fr];
+}
+
+.cards>div>img {
+  @apply rounded-lg h-full w-full;
+  object-fit: cover;
+}
+
+.cards>div:hover {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--primary) 50%, transparent);
+}
+
+.home_apps {
+  @apply flex flex-col w-full;
+}
+
+.home_apps>div:nth-child(1) {
+  @apply w-full flex mt-2;
+  @apply text-xl font-semibold;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home_apps>div:nth-child(1)>.arrow {
+  @apply hidden;
+}
+
+.home_apps>div:nth-child(1) .all {
+  @apply flex text-sm ml-auto px-2 py-1 rounded-md cursor-pointer;
+
+  background: color-mix(in srgb,
+      var(--color-neutral-content) 10%,
+      var(--win32-accent) 5%) !important;
+}
+
+.home_apps>div:nth-child(2) {
+  @apply columns-2 xl:columns-3 2xl:columns-4 gap-2 space-y-4 mt-2;
+}
+
+.home_apps>div:nth-child(2)>div {
+  @apply break-inside-avoid rounded-xl p-4 cursor-pointer transition-all;
+
+  @apply bg-transparent h-32;
+}
+
+@media (min-width: 50rem) {
+  .home_apps>div:nth-child(1) {
+    @apply transition-all w-fit rounded-lg cursor-pointer flex items-center;
+    @apply hover:pl-3 hover:pr-3 pr-6 py-2;
+
+    @apply text-xl font-semibold;
+
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .home_apps>div:nth-child(1)>.arrow {
+    @apply block;
+  }
+
+  .home_apps>div:nth-child(1) .all {
+    @apply hidden;
+  }
+
+  .home_apps>div:nth-child(1):hover {
+    color: color-mix(in srgb,
+        var(--color-neutral-content) 5%,
+        var(--win32-accent) 75%) !important;
+    background: color-mix(in srgb,
+        var(--color-neutral-content) 10%,
+        var(--win32-accent) 5%) !important;
+  }
+
+  .home_apps>div:nth-child(2)>div {
+    @apply break-inside-avoid rounded-xl p-4 shadow-md cursor-pointer transition-all;
+
+    @apply bg-accent/15 dark:bg-neutral-content/15 hover:dark:bg-neutral-content/10;
+  }
+}

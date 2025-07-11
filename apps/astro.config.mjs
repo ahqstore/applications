@@ -12,5 +12,14 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.github.com",
+        pathname: "ahqstore/**",
+      },
+    ],
+  },
   integrations: [react()],
 });

@@ -5,6 +5,7 @@ import { join } from "node:path";
 import type { HomeData } from "@/utils/interfaces/home";
 
 import Home from "@/layouts/Home.astro";
+import { Showcase } from "@/components/react/Showcase";
 
 const check: HomeData = JSON.parse(
   readFileSync(
@@ -15,4 +16,6 @@ const check: HomeData = JSON.parse(
 console.log(check);
 ---
 
-<Home pageType="windows" homeData={check} footer> Windows Home </Home>
+<Home pageType="windows" homeData={check} footer>
+  <Showcase data={check} />
+</Home>

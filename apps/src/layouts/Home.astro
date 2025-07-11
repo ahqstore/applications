@@ -33,8 +33,10 @@ const { pageType, footer } = Astro.props;
         />
       </SearchBox>
 
-      <div class="w-screen h-[calc(100%-3rem)] flex flex-col">
-        <div class="w-full h-full mb-auto">
+      <div
+        class="w-screen h-[calc(100%-3rem)] flex flex-col overflow-x-hidden overflow-y-scroll"
+      >
+        <div class="w-full mb-auto pb-5">
           <slot />
         </div>
         {footer && <Footer />}
