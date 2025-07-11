@@ -8,16 +8,17 @@ const year = new Date().getFullYear();
 
 <Separator client:visible />
 <footer
-  class="mt-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-8 text-muted-foreground bg-muted border-t border-muted"
+  class="mt-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-8 text-primary-content bg-muted border-t border-muted"
 >
   <div class="flex flex-col items-center md:items-start gap-2">
     <section class="flex items-center gap-2">
       <Image
         src={logo}
         alt="AHQ Store Logo"
-        width="128"
-        height="128"
-        class="min-w-[40px] min-h-[40px] grayscale"
+        width="250"
+        height="250"
+        class="w-[40px] h-[40px] grayscale"
+        loading="eager"
       />
       <span class="text-3xl font-mono font-bold text-muted-foreground"
         >AHQ Store</span
