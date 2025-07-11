@@ -18,20 +18,71 @@ const identMap: { [key: string]: string } = {
 const home = data.home;
 const splash = data.splash;
 
-console.log(splash); // This will log on the server during build
+let splashHero: GetImageResult | undefined;
+let splashSub: GetImageResult | undefined;
+let splashThird: GetImageResult | undefined; // Added for explicit image optimization
+let splashFourth: GetImageResult | undefined; // Added for explicit image optimization
 
-let splashHero: GetImageResult,
-  splashSub: GetImageResult,
-  splash3: GetImageResult,
-  splash4: GetImageResult;
+const responsiveWidths = [
+  320, // Small mobile
+  640, // Medium mobile / Small tablet
+  768, // Tablet / Small desktop
+  1024, // Desktop
+  1280, // Larger Desktop
+  // You might want to include a width up to the maximum display size you expect,
+  // but avoid going over the actual display size needed.
+  // For a 2000x2000 source, consider the actual space the image will occupy on screen.
+  // If your hero section is max 1400px wide, no need for widths > 1400px.
+  1440, // Example: common max width for hero on larger screens
+];
 
 if (splash) {
-  splashHero = await getImage({
-    src: splash.hero.background,
-    format: "webp",
-    inferSize: true,
-  });
+  [splashHero, splashSub, splashThird, splashFourth] = await Promise.all([
+    getImage({
+      src: splash.hero.background,
+      format: "webp",
+      // For LCP, ensure `sizes` attribute is passed to the img tag
+      // to help browser pick the right size quickly.
+      // This height is for the *output* image. If it's a background, it's just a hint.
+      height: 384, // This will be the max height for the generated sizes
+      widths: responsiveWidths, // Generate multiple widths
+      inferSize: true, // Still useful for the aspect ratio
+      quality: 80,
+      densities: [1, 2, 3, 4, 5, 6],
+    }),
+    getImage({
+      src: splash.subhero.background,
+      format: "webp",
+      height: 384,
+      widths: responsiveWidths, // Generate multiple widths
+      inferSize: true,
+      quality: 80,
+      densities: [1, 2, 3, 4, 5, 6],
+    }),
+    getImage({
+      // Now optimizing the third image as well
+      src: splash.third.background,
+      format: "webp",
+      height: 384,
+      widths: responsiveWidths,
+      inferSize: true,
+      quality: 80,
+      densities: [1, 2, 3, 4, 5, 6],
+    }),
+    getImage({
+      // Now optimizing the fourth image as well
+      src: splash.fourth.background,
+      format: "webp",
+      height: 384,
+      widths: responsiveWidths,
+      inferSize: true,
+      quality: 80,
+      densities: [1, 2, 3, 4, 5, 6],
+    }),
+  ]);
 }
+
+console.log(splashSub);
 
 // Import ChevronRight from lucide-react. This will be used in the client-side React component.
 import { ChevronRight } from "lucide-react";
@@ -96,11 +147,13 @@ import { ChevronRight } from "lucide-react";
                 {splash.subhero.title}
               </div>
               <Image
-                src={splash.subhero.background}
+                src={splashSub!!.src}
+                srcset={splashSub!!.srcSet.attribute}
                 alt="Background"
                 height="384"
                 inferSize
                 loading="eager"
+                fetchpriority="high"
               />
             </a>
 
@@ -111,11 +164,13 @@ import { ChevronRight } from "lucide-react";
                 {splash.third.title}
               </div>
               <Image
-                src={splash.third.background}
+                src={splashThird!!.src}
+                srcset={splashThird!!.srcSet.attribute}
                 alt="background"
                 height="384"
                 inferSize
                 loading="eager"
+                fetchpriority="high"
               />
             </a>
 
@@ -126,11 +181,13 @@ import { ChevronRight } from "lucide-react";
                 {splash.fourth.title}
               </div>
               <Image
-                src={splash.fourth.background}
+                src={splashFourth!!.src}
+                srcset={splashFourth!!.srcSet.attribute}
                 alt="Background"
                 height="384"
                 inferSize
                 loading="eager"
+                fetchpriority="high"
               />
             </a>
           </div>
