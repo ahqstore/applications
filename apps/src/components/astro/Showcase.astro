@@ -1,7 +1,7 @@
 ---
 import type { HomeData } from "@/utils/interfaces/home";
 import type { GetImageResult } from "astro";
-import { getImage } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 
 export interface Props {
   data: HomeData;
@@ -95,7 +95,11 @@ import { ChevronRight } from "lucide-react";
               <div style={{ color: splash.subhero.color }}>
                 {splash.subhero.title}
               </div>
-              <img src={splash.subhero.background} alt="Background" />
+              <Image
+                src={splash.subhero.background}
+                alt="Background"
+                inferSize
+              />
             </a>
 
             <a
@@ -104,7 +108,7 @@ import { ChevronRight } from "lucide-react";
               <div style={{ color: splash.third.color }}>
                 {splash.third.title}
               </div>
-              <img src={splash.third.background} alt="background" />
+              <Image src={splash.third.background} alt="background" inferSize />
             </a>
 
             <a
@@ -113,7 +117,11 @@ import { ChevronRight } from "lucide-react";
               <div style={{ color: splash.fourth.color }}>
                 {splash.fourth.title}
               </div>
-              <img src={splash.fourth.background} alt="background" />
+              <Image
+                src={splash.fourth.background}
+                alt="Background"
+                inferSize
+              />
             </a>
           </div>
         </div>
