@@ -1,8 +1,8 @@
 @reference "../../styles/global.css";
 
 :root {
-  --win32-accent: "red";
-  --color-neutral-content: "red";
+  /* --win32-accent: "red"; */
+  /* --color-neutral-content: "red"; */
 }
 
 .hero {

@@ -1,0 +1,57 @@
+---
+import type { GetStaticPaths } from "astro";
+
+export interface Props {
+  pageType: "windows" | "linux" | "fdroid";
+  file: string;
+}
+
+export const getStaticPaths = (() => {
+  const data = [
+    {
+      file: "home_win32.json",
+      os: "windows",
+    },
+    {
+      file: "home_linux.json",
+      os: "linux",
+    },
+    {
+      file: "home_fdroid.json",
+      os: "android",
+    },
+  ];
+
+  return data.map((s) => ({
+    params: {
+      home: s.os,
+    },
+    props: {
+      file: s.file,
+      pageType: s.os.replace("android", "fdroid"),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import type { HomeData } from "@/utils/interfaces/home";
+
+import HomeLayout from "@/layouts/Home.astro";
+import Showcase from "@/components/astro/Showcase.astro";
+
+const { file, pageType } = Astro.props;
+
+const check: HomeData = JSON.parse(
+  readFileSync(
+    join(import.meta.dirname, `../../public/jsondump/${file}`)
+  ).toString()
+);
+
+console.log(check);
+---
+
+<HomeLayout pageType={pageType}>
+  <Showcase data={check} />
+</HomeLayout>

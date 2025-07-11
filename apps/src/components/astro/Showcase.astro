@@ -78,6 +78,7 @@ if (splash) {
 
 // Import ChevronRight from lucide-react. This will be used in the client-side React component.
 import { ChevronRight } from "lucide-react";
+import { SearchResults } from "../react/SearchResults";
 ---
 
 <script>
@@ -99,11 +100,42 @@ import { ChevronRight } from "lucide-react";
     });
 </script>
 
+<script>
+  import { searchStore } from "@/search/searchStore";
+
+  const normal = () => {
+    const toShowElements = document.querySelectorAll(".show_when_searching");
+    const toHideElements = document.querySelectorAll(".hide_when_searching");
+
+    toHideElements.forEach((s) => s.classList.remove("!hidden"));
+    toShowElements.forEach((s) => s.classList.add("!hidden"));
+  };
+  const hide = () => {
+    const toShowElements = document.querySelectorAll(".show_when_searching");
+    const toHideElements = document.querySelectorAll(".hide_when_searching");
+
+    toHideElements.forEach((s) => s.classList.add("!hidden"));
+    toShowElements.forEach((s) => s.classList.remove("!hidden"));
+  };
+
+  function process(content: string | undefined) {
+    if (!content || content.length == 0) {
+      normal();
+    } else {
+      hide();
+    }
+  }
+
+  searchStore.subscribe((content) => process(content));
+</script>
+
 <style>
   @import "./showcase.css";
 </style>
 
 <div class="px-2">
+  <SearchResults className="!hidden show_when_searching" client:load />
+
   {
     splash && (
       <>

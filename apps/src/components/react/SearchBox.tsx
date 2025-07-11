@@ -6,9 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useStore } from "@nanostores/react";
 
 import { Search } from "lucide-react";
-import { searchStore } from "@/search/searchStore";
+import { searching, searchStore } from "@/search/searchStore";
 
 export interface SearchBoxProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ interface CommonSearchElementsProps {
 }
 
 function CommonSearchElements({ children, pageType, isLoading, waste }: CommonSearchElementsProps) {
+  const searchingState = useStore(searching);
   const search = useRef<HTMLInputElement | null>(null);
 
   const pushState = (uri: URL) => history.pushState(null, "AHQ Store", uri);
@@ -41,7 +43,7 @@ function CommonSearchElements({ children, pageType, isLoading, waste }: CommonSe
     }
   }, []);
 
-  useEffect(() => {
+  (globalThis as any).loaded = () => {
     const listener = () => {
       const url = new URL(window.location.href);
       const output = url.searchParams.get("search") ?? "";
@@ -70,7 +72,7 @@ function CommonSearchElements({ children, pageType, isLoading, waste }: CommonSe
 
     window.addEventListener("popstate", listener);
     return () => window.removeEventListener("popstate", listener);
-  }, []);
+  };
 
 
   return (
@@ -131,6 +133,7 @@ function CommonSearchElements({ children, pageType, isLoading, waste }: CommonSe
               }
             }}
             defaultValue={initialSearch}
+            disabled={searchingState}
           />
           <Search className="absolute left-[calc(calc(var(--spacing)*2.5)+calc(var(--spacing)*4))] md:left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
         </form>
@@ -161,6 +164,8 @@ export function SearchBox(props: SearchBoxProps) {
         await searchWorker.load(props.pageType);
 
         setIsLoaded(false);
+
+        (globalThis as any).loaded();
       })();
     }
   }, [props.pageType]);

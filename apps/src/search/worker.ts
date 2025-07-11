@@ -1,4 +1,4 @@
-import type { WorkerMessage } from "./message";
+import type { SearchOutput, WorkerMessage } from "./message";
 import MiniSearch from 'minisearch'
 
 import { decode } from "@msgpack/msgpack"
@@ -9,7 +9,7 @@ let miniSearch = new MiniSearch({
   fields: ['title', 'name', "id"], // fields to index for full-text search
   storeFields: ['id'], // fields to return with search results
   searchOptions: {
-    boost: { title: 2 },
+    // boost: { name: 2, title: 2 },
     fuzzy: 0.8,
   },
 });
@@ -40,5 +40,17 @@ onmessage = async (e: MessageEvent<WorkerMessage>) => {
     console.log("Search data has been initialized");
 
     postMessage("updated");
+  } else if (e.data.type == "Search") {
+    const content = e.data.content;
+
+    const data = miniSearch.search(content)
+      .map((s) => s.id);
+
+    if (data.length > 1000) data.length = 1000;
+
+    postMessage({
+      type: "Successful",
+      data
+    } as SearchOutput);
   }
 }
