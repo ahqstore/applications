@@ -44,7 +44,6 @@ if (splash) {
       // For LCP, ensure `sizes` attribute is passed to the img tag
       // to help browser pick the right size quickly.
       // This height is for the *output* image. If it's a background, it's just a hint.
-      height: 384, // This will be the max height for the generated sizes
       widths: responsiveWidths, // Generate multiple widths
       inferSize: true, // Still useful for the aspect ratio
       quality: 80,
@@ -52,7 +51,6 @@ if (splash) {
     getImage({
       src: splash.subhero.background,
       format: "webp",
-      height: 384,
       widths: responsiveWidths, // Generate multiple widths
       inferSize: true,
       quality: 80,
@@ -61,7 +59,6 @@ if (splash) {
       // Now optimizing the third image as well
       src: splash.third.background,
       format: "webp",
-      height: 384,
       widths: responsiveWidths,
       inferSize: true,
       quality: 80,
@@ -70,7 +67,6 @@ if (splash) {
       // Now optimizing the fourth image as well
       src: splash.fourth.background,
       format: "webp",
-      height: 384,
       widths: responsiveWidths,
       inferSize: true,
       quality: 80,
@@ -146,7 +142,8 @@ import { ChevronRight } from "lucide-react";
                 src={splashSub!!.src}
                 srcset={splashSub!!.srcSet.attribute}
                 alt="Background"
-                inferSize
+                height={splashSub!!.attributes.height}
+                width={splashSub!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
               />
@@ -162,7 +159,8 @@ import { ChevronRight } from "lucide-react";
                 src={splashThird!!.src}
                 srcset={splashThird!!.srcSet.attribute}
                 alt="background"
-                inferSize
+                height={splashThird!!.attributes.height}
+                width={splashThird!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
               />
@@ -178,7 +176,8 @@ import { ChevronRight } from "lucide-react";
                 src={splashFourth!!.src}
                 srcset={splashFourth!!.srcSet.attribute}
                 alt="Background"
-                inferSize
+                height={splashFourth!!.attributes.height}
+                width={splashFourth!!.attributes.width}
                 loading="eager"
                 fetchpriority="high"
               />
