@@ -17,12 +17,12 @@ import "@/styles/global.css";
     <title>AHQ Store</title>
   </head>
   <body>
-    <TooltipProvider client:load>
-      <Toaster client:load />
+    <TooltipProvider client:idle>
+      <Toaster client:idle />
 
       <div class="h-full w-full flex flex-col">
-        <Nav client:load />
-        <Separator client:load />
+        <Nav client:idle />
+        <Separator client:idle />
         <slot />
       </div>
     </TooltipProvider>

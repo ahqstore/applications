@@ -42,7 +42,7 @@ const { title } = Astro.props;
       isDev ? (
         <slot />
       ) : (
-        <RightClickMenu client:visible>
+        <RightClickMenu client:idle>
           <slot />
         </RightClickMenu>
       )
