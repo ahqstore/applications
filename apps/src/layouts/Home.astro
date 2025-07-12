@@ -1,6 +1,7 @@
 ---
 interface Props {
   pageType: "windows" | "linux" | "fdroid";
+  title?: string;
   footer?: boolean;
 }
 
@@ -13,10 +14,10 @@ import Layout from "@/layouts/Layout.astro";
 import icon from "@/assets/1064x1064.png";
 import Footer from "./Footer.astro";
 
-const { pageType, footer } = Astro.props;
+const { pageType, footer, title } = Astro.props;
 ---
 
-<Layout>
+<Layout title={title}>
   <div class="flex flex-col w-screen h-screen overflow-hidden">
     <div class="flex flex-col w-screen h-full">
       <SearchBox pageType={pageType} client:idle>

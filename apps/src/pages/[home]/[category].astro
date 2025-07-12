@@ -1,0 +1,63 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import type { HomeData } from "@/utils/interfaces/home";
+
+import HomeLayout from "@/layouts/Home.astro";
+
+export interface Props {
+  pageType: "windows" | "linux" | "fdroid";
+  backUrl: string;
+  category: string;
+  apps: string[];
+}
+
+export const getStaticPaths = (() => {
+  const data = [
+    {
+      file: "home_win32.json",
+      os: "windows",
+    },
+    {
+      file: "home_linux.json",
+      os: "linux",
+    },
+    {
+      file: "home_fdroid.json",
+      os: "android",
+    },
+  ];
+
+  const output = data
+    .map((s) => {
+      const content = readFileSync(
+        join(import.meta.dirname, `../../../public/jsondump/${s.file}`)
+      ).toString();
+
+      const data: HomeData = JSON.parse(content);
+
+      return data.home.map(([cat, apps]) => ({
+        params: {
+          home: s.os,
+          category: cat.toLowerCase(),
+        },
+        props: {
+          pageType: "none",
+          backUrl: `/applications/${s.os}/`,
+          category: `${cat}`,
+          apps,
+        },
+      }));
+    })
+    .flat(1);
+
+  return output;
+}) satisfies GetStaticPaths;
+
+const { pageType, category } = Astro.props;
+---
+
+<HomeLayout pageType={pageType} title={category} />

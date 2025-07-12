@@ -246,9 +246,11 @@ import { SearchResults } from "../react/SearchResults";
           </button>
         </div>
         <div>
-          {apps[1].map((app) => (
-            <div>{app}</div>
-          ))}
+          {apps[1]
+            .filter((_, i) => i < 10)
+            .map((app) => (
+              <div>{app}</div>
+            ))}
         </div>
       </div>
     ))
