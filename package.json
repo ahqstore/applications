@@ -1,5 +1,8 @@
 {
 	"devDependencies": {
-		"@tailwindcss/oxide": "^4.1.11"
+		"@tailwindcss/oxide": "^4.1.13"
+	},
+	"dependencies": {
+		"react-intersection-observer": "^9.16.0"
 	}
 }
