@@ -101,20 +101,27 @@ async fn run() -> Option<()> {
   let token = option_env!("TOKEN").and_then(|x| Some(x.to_string()));
   let token = token.as_ref();
 
+  println!("Getting Commit");
   let ahqstore = get_commit(OfficialManifestSource::AHQStore, token).await?;
 
+  println!("Getting Winget Commit");
   let winget = get_commit(OfficialManifestSource::WinGet, token).await?;
+  println!("Getting FDroid Commit");
   let fdroid = get_commit(OfficialManifestSource::FDroid, token).await?;
+  println!("Getting Linux Commit");
   let linux = get_commit(OfficialManifestSource::Linux, token).await?;
 
+  println!("Getting Home (win32)");
   let win32_home = get_home(OfficialManifestSource::WinGet, &winget)
     .await
     .ok()?;
 
+  println!("Getting Home (Linux)");
   let linux_home = get_home(OfficialManifestSource::Linux, &linux)
     .await
     .ok()?;
 
+  println!("Getting Home (fdroid)");
   let fdroid_home = get_home(OfficialManifestSource::FDroid, &fdroid)
     .await
     .ok()?;

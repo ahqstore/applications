@@ -34,7 +34,7 @@ export const getStaticPaths = (() => {
   const output = data
     .map((s) => {
       const content = readFileSync(
-        join(import.meta.dirname, `../../../public/jsondump/${s.file}`)
+        join(import.meta.dirname, `../../public/jsondump/${s.file}`)
       ).toString();
 
       const data: HomeData = JSON.parse(content);

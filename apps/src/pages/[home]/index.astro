@@ -45,7 +45,7 @@ const { file, pageType } = Astro.props;
 
 const check: HomeData = JSON.parse(
   readFileSync(
-    join(import.meta.dirname, `../../../public/jsondump/${file}`)
+    join(import.meta.dirname, `../../public/jsondump/${file}`)
   ).toString()
 );
 
