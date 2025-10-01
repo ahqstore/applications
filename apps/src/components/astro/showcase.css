@@ -1,9 +1,10 @@
 @reference "../../styles/global.css";
 
-:root {
-  /* --win32-accent: "red"; */
-  /* --color-neutral-content: "red"; */
-}
+/* :root {
+  --win32-accent: "red";
+  --color-neutral-content: "red";
+} 
+*/
 
 .hero {
   @apply min-w-full max-w-full lg:min-w-[58%] lg:max-w-[58%] xl:min-w-[65%] xl:max-w-[65%] lg:h-96 md:h-80 h-40 rounded-lg;
