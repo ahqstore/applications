@@ -6,14 +6,18 @@ import { getImage, Image } from "astro:assets";
 export interface Props {
   data: HomeData;
   prefetched: Map<string, [AHQStoreApplication, string]>;
+  os: string;
+  hashes: Map<number, string>;
 }
 
 // Access props directly from Astro.props
-const { data, prefetched } = Astro.props;
+const { data, prefetched, os, hashes } = Astro.props;
 
 const identMap: { [key: string]: string } = {
   w: "win32",
   a: "community",
+  f: "android",
+  l: "linux",
 };
 
 const home = data.home;
@@ -82,7 +86,8 @@ if (splash) {
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { SearchResults } from "../react/SearchResults";
 import type { AHQStoreApplication } from "ahqstore-types";
-import { AppBox } from "../react/AppBox";
+
+import AppBox from "./AppBox.astro";
 ---
 
 <script>
@@ -94,6 +99,8 @@ import { AppBox } from "../react/AppBox";
       const identMap: { [key: string]: string } = {
         w: "win32",
         a: "community",
+        f: "android",
+        l: "linux",
       };
 
       const appId = div.getAttribute("data-app-id")!!;
@@ -235,13 +242,51 @@ import { AppBox } from "../react/AppBox";
     )
   }
 
+  <script>
+    document.querySelectorAll(".desktopClick").forEach((item) => {
+      const e = item as HTMLDivElement;
+
+      e.addEventListener("click", () => {
+        if (window.matchMedia("(min-width: 50rem)").matches) {
+          window.location.pathname = e.getAttribute("data-path")!!;
+        }
+      });
+    });
+
+    document.querySelectorAll(".mobileClick").forEach((item) => {
+      const e = item as HTMLDivElement;
+
+      e.addEventListener("click", () => {
+        if (!window.matchMedia("(min-width: 50rem)").matches) {
+          window.location.pathname = e.getAttribute("data-path")!!;
+        }
+      });
+    });
+
+    document.querySelectorAll(".registerOnClick").forEach((item) => {
+      const e = item as HTMLDivElement;
+
+      e.addEventListener("click", () => {
+        if (window.matchMedia("(min-width: 50rem)").matches) {
+          window.location.pathname = e.getAttribute("data-path")!!;
+        }
+      });
+    });
+  </script>
+
   {
-    home?.map((apps) => (
+    home?.map((apps, i) => (
       <div class="home_apps hide_when_searching">
-        <div>
+        <div
+          class="desktopClick"
+          data-path={`/applications/${os}/${hashes.get(i)!!}`}
+        >
           <span>{apps[0]}</span>
           <ChevronRight className="arrow" />
-          <button class="all">
+          <button
+            data-path={`/applications/${os}/${hashes.get(i)!!}`}
+            class="all mobileClick"
+          >
             <ArrowRight className="arrow" />
           </button>
         </div>
@@ -253,7 +298,7 @@ import { AppBox } from "../react/AppBox";
               <AppBox
                 application={prefetched.get(app)!![0]}
                 img={prefetched.get(app)!![1]}
-                path="/ahqstore"
+                path={`/applications/view/${identMap[app[0]]}/${app.substring(2)}`}
               />
             ))}
         </div>

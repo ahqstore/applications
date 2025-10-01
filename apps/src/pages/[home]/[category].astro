@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 
+import { hash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -42,12 +43,12 @@ export const getStaticPaths = (() => {
       return data.home.map(([cat, apps]) => ({
         params: {
           home: s.os,
-          category: cat.toLowerCase(),
+          category: hash("sha256", cat),
         },
         props: {
           pageType: "none",
           backUrl: `/applications/${s.os}/`,
-          category: `${cat}`,
+          category: cat,
           apps,
         },
       }));

@@ -42,12 +42,13 @@ import HomeLayout from "@/layouts/Home.astro";
 import Showcase from "@/components/astro/Showcase.astro";
 import type { AHQStoreApplication } from "ahqstore-types";
 import { getAppWrapped } from "@/utils/appfetch/fetch";
+import { hash } from "node:crypto";
 
 const { file, pageType } = Astro.props;
 
 const getString = (data: string) => {
   return readFileSync(
-    process.env.DEV
+    import.meta.env.DEV
       ? join(import.meta.dirname, `../../../public/jsondump/${data}`)
       : join(import.meta.dirname, `../../../apps/public/jsondump/${data}`)
   ).toString();
@@ -75,10 +76,12 @@ const constants = {
 };
 
 const prefetched: Map<string, [AHQStoreApplication, string]> = new Map();
+const hashes: Map<number, string> = new Map();
 
 for (let i = 0; i < check.home.length; i++) {
   const entry = check.home[i][1];
 
+  hashes.set(i, hash("sha256", check.home[i][0]));
   for (let j = 0; j < entry.length; j++) {
     const data = await getAppWrapped(entry[j], constants);
 
@@ -88,5 +91,10 @@ for (let i = 0; i < check.home.length; i++) {
 ---
 
 <HomeLayout pageType={pageType} footer>
-  <Showcase data={check} prefetched={prefetched} />
+  <Showcase
+    data={check}
+    prefetched={prefetched}
+    hashes={hashes}
+    os={pageType}
+  />
 </HomeLayout>
