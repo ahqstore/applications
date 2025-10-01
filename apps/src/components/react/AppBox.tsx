@@ -1,8 +1,8 @@
 import type { AHQStoreApplication } from "ahqstore-types";
 
-export function AppBox({ application, img }: { application: AHQStoreApplication, img: string }) {
+export function AppBox({ application, img, path }: { application: AHQStoreApplication, img: string, path: string }) {
   return <div className="w-full h-full flex gap-1 sm:gap-2" onClick={() => {
-    window.location.pathname = `/applications/`
+    window.location.pathname = path
   }}>
     <img className="m-0 size-auto border-none rounded-xl" src={img} />
     <div className="w-full h-full flex flex-col overflow-hidden gap-1 sm:gap-2">

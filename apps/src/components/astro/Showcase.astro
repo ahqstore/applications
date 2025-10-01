@@ -79,9 +79,10 @@ if (splash) {
 }
 
 // Import ChevronRight from lucide-react. This will be used in the client-side React component.
-import { ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { SearchResults } from "../react/SearchResults";
 import type { AHQStoreApplication } from "ahqstore-types";
+import { AppBox } from "../react/AppBox";
 ---
 
 <script>
@@ -132,7 +133,7 @@ import type { AHQStoreApplication } from "ahqstore-types";
   searchStore.subscribe((content) => process(content));
 </script>
 
-<style>
+<style is:global>
   @import "./showcase.css";
 </style>
 
@@ -239,22 +240,21 @@ import type { AHQStoreApplication } from "ahqstore-types";
       <div class="home_apps hide_when_searching">
         <div>
           <span>{apps[0]}</span>
-          {/* Re-integrated Lucide ChevronRight */}
           <ChevronRight className="arrow" />
           <button class="all">
-            <span>All</span>
-            {/* Re-integrated Lucide ChevronRight */}
-            <ChevronRight className="arrow" />
+            <ArrowRight className="arrow" />
           </button>
         </div>
+
         <div>
           {apps[1]
             .filter((_, i) => i < 10)
             .map((app) => (
-              <div>
-                <img src={prefetched.get(app)!![1]} />
-                {app}
-              </div>
+              <AppBox
+                application={prefetched.get(app)!![0]}
+                img={prefetched.get(app)!![1]}
+                path="/ahqstore"
+              />
             ))}
         </div>
       </div>

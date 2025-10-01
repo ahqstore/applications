@@ -80,7 +80,15 @@ export async function getAppWrapped(appId: string, urls: Constants): Promise<[AH
     getAppAsset(appId, "0", urls)
   ]);
 
-  const blob = new Blob([img as unknown as any]);
+  let blob = new Blob([img as unknown as any]);
+
+  if (appId.startsWith("f:")) {
+    const url = new TextDecoder().decode(await blob.arrayBuffer());
+
+    blob = await fetch(url)
+      .then((d) => d.arrayBuffer())
+      .then((d) => new Blob([d]));
+  }
 
   return [app, await blobToBase64(blob)];
 }

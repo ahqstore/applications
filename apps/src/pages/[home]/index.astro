@@ -82,7 +82,6 @@ for (let i = 0; i < check.home.length; i++) {
   for (let j = 0; j < entry.length; j++) {
     const data = await getAppWrapped(entry[j], constants);
 
-    console.log(data);
     prefetched.set(entry[j], data);
   }
 }
