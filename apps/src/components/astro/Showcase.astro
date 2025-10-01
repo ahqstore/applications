@@ -5,10 +5,11 @@ import { getImage, Image } from "astro:assets";
 
 export interface Props {
   data: HomeData;
+  prefetched: Map<string, [AHQStoreApplication, string]>;
 }
 
 // Access props directly from Astro.props
-const { data } = Astro.props;
+const { data, prefetched } = Astro.props;
 
 const identMap: { [key: string]: string } = {
   w: "win32",
@@ -80,6 +81,7 @@ if (splash) {
 // Import ChevronRight from lucide-react. This will be used in the client-side React component.
 import { ChevronRight } from "lucide-react";
 import { SearchResults } from "../react/SearchResults";
+import type { AHQStoreApplication } from "ahqstore-types";
 ---
 
 <script>
@@ -249,7 +251,10 @@ import { SearchResults } from "../react/SearchResults";
           {apps[1]
             .filter((_, i) => i < 10)
             .map((app) => (
-              <div>{app}</div>
+              <div>
+                <img src={prefetched.get(app)!![1]} />
+                {app}
+              </div>
             ))}
         </div>
       </div>

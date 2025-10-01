@@ -40,18 +40,54 @@ import type { HomeData } from "@/utils/interfaces/home";
 
 import HomeLayout from "@/layouts/Home.astro";
 import Showcase from "@/components/astro/Showcase.astro";
+import type { AHQStoreApplication } from "ahqstore-types";
+import { getAppWrapped } from "@/utils/appfetch/fetch";
 
 const { file, pageType } = Astro.props;
 
-const check: HomeData = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, `../../../apps/public/jsondump/${file}`)
-  ).toString()
-);
+const getString = (data: string) => {
+  return readFileSync(
+    process.env.DEV
+      ? join(import.meta.dirname, `../../../public/jsondump/${data}`)
+      : join(import.meta.dirname, `../../../apps/public/jsondump/${data}`)
+  ).toString();
+};
 
-console.log(check);
+const check: HomeData = JSON.parse(getString(file));
+
+const constants = {
+  AS: {
+    app: getString("app_url_ahqstore"),
+    asset: getString("app_asset_url_ahqstore"),
+  },
+  FD: {
+    app: getString("app_url_fdroid"),
+    asset: getString("app_asset_url_fdroid"),
+  },
+  LI: {
+    app: getString("app_url_linux"),
+    asset: getString("app_asset_url_linux"),
+  },
+  WG: {
+    app: getString("app_url_winget"),
+    asset: getString("app_asset_url_winget"),
+  },
+};
+
+const prefetched: Map<string, [AHQStoreApplication, string]> = new Map();
+
+for (let i = 0; i < check.home.length; i++) {
+  const entry = check.home[i][1];
+
+  for (let j = 0; j < entry.length; j++) {
+    const data = await getAppWrapped(entry[j], constants);
+
+    console.log(data);
+    prefetched.set(entry[j], data);
+  }
+}
 ---
 
 <HomeLayout pageType={pageType} footer>
-  <Showcase data={check} />
+  <Showcase data={check} prefetched={prefetched} />
 </HomeLayout>

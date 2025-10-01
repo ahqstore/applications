@@ -1,4 +1,5 @@
 import type { HomeData } from "@/utils/interfaces/home";
+import type { AHQStoreApplication } from "ahqstore-types";
 
 import { ChevronRight } from "lucide-react";
 
@@ -6,6 +7,7 @@ import "./showcase.css"
 
 export interface ShowcaseProps {
   data: HomeData,
+  prefetched: Map<string, [AHQStoreApplication, string]>
 }
 
 const identMap: { [key: string]: string } = {

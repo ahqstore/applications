@@ -8,7 +8,7 @@ import {
 
 export function OsSelect() {
   return <Select onValueChange={(s) => window.location.pathname = `/applications/${s}`}>
-    <SelectTrigger aria-label="Select your OS repository" className="h-10">
+    <SelectTrigger aria-label="Select your OS repository" className="h-10 text-black">
       <SelectValue placeholder="Select your OS repository" />
     </SelectTrigger>
     <SelectContent>

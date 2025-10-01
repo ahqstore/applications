@@ -3,22 +3,28 @@ import Layout from "@/layouts/Layout.astro";
 import { OsSelect } from "@/components/react/OsSelect";
 ---
 
+<style is:global>
+  .text-xl {
+    font-size: var(--text-xl, 1.25rem /* 20px */) /* 1.25rem = 20px */;
+    line-height: var(
+      --tw-leading,
+      var(--text-xl--line-height, calc(1.75 / 1.25) /* 1.4 */)
+        /* calc(1.75 / 1.25) ≈ 1.4 */
+    );
+  }
+
+  .showcase {
+    @apply w-screen h-screen flex flex-col items-center justify-center;
+  }
+
+  @media (prefers-color-scheme: light) {
+    span {
+      color: black !important;
+    }
+  }
+</style>
+
 <Layout title="Select">
-  <style>
-    .text-xl {
-      font-size: var(--text-xl, 1.25rem /* 20px */) /* 1.25rem = 20px */;
-      line-height: var(
-        --tw-leading,
-        var(--text-xl--line-height, calc(1.75 / 1.25) /* 1.4 */)
-          /* calc(1.75 / 1.25) ≈ 1.4 */
-      );
-    }
-
-    .showcase {
-      @apply w-screen h-screen flex flex-col items-center justify-center;
-    }
-  </style>
-
   <div class="showcase">
     <h1 class="text-xl mb-5 font-sans">Select what you'd like to view</h1>
 

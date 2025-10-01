@@ -1,14 +1,14 @@
 use std::fs::{create_dir, write as fswrite};
 
 use ahqstore_types::{
-  ahqstore::{AHQSTORE_APPS_DEV, AHQSTORE_APP_URL, AHQSTORE_DEV_DATA, AHQSTORE_SEARCH, AHQSTORE_TOTAL, AHQSTORE_MAP},
+  ahqstore::{AHQSTORE_APPS_DEV, AHQSTORE_APP_URL, AHQSTORE_APP_ASSET_URL, AHQSTORE_DEV_DATA, AHQSTORE_SEARCH, AHQSTORE_TOTAL, AHQSTORE_MAP},
   api::{
     methods::{get_commit, get_full_search, get_full_map},
-    winget::{WINGET_APPS_DEV, WINGET_APP_URL, WINGET_DEV_DATA, WINGET_SEARCH, WINGET_TOTAL, WINGET_MAP},
+    winget::{WINGET_APPS_DEV, WINGET_APP_URL, WINGET_APP_ASSET_URL, WINGET_DEV_DATA, WINGET_SEARCH, WINGET_TOTAL, WINGET_MAP},
   },
-  fdroid::{FDROID_APPS_DEV, FDROID_APP_URL, FDROID_DEV_DATA, FDROID_SEARCH, FDROID_TOTAL, FDROID_MAP},
+  fdroid::{FDROID_APPS_DEV, FDROID_APP_URL, FDROID_APP_ASSET_URL, FDROID_DEV_DATA, FDROID_SEARCH, FDROID_TOTAL, FDROID_MAP},
   get_home,
-  linux::{LINUX_APPS_DEV, LINUX_APP_URL, LINUX_DEV_DATA, LINUX_SEARCH, LINUX_TOTAL, LINUX_MAP},
+  linux::{LINUX_APPS_DEV, LINUX_APP_URL, LINUX_APP_ASSET_URL, LINUX_DEV_DATA, LINUX_SEARCH, LINUX_TOTAL, LINUX_MAP},
   methods::OfficialManifestSource, SearchEntry,
 };
 use paste::paste;
@@ -23,6 +23,7 @@ macro_rules! rgen {
   ($x:ident, $s:ident, $commit:ident $(, $xa:expr)?) => {
     paste! {
       write(stringify!([<app_url_ $x>]), [<$x:upper _APP_URL>].replace("{COMMIT}", &$x)).ok()?;
+      write(stringify!([<app_asset_url_ $x>]), [<$x:upper _APP_ASSET_URL>].replace("{COMMIT}", &$x)).ok()?;
       write(stringify!([<apps_dev_ $x>]), [<$x:upper _APPS_DEV>].replace("{COMMIT}", &$x)).ok()?;
       write(stringify!([<dev_data_ $x>]), [<$x:upper _DEV_DATA>].replace("{COMMIT}", &$x)).ok()?;
 
