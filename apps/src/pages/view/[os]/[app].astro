@@ -224,7 +224,13 @@ if (import.meta.env.DEV) {
     h.width = width;
     h.inferSize = false;
   } catch (e) {
-    override = readFileSync(p).toString();
+    override = (() => {
+      try {
+        return readFileSync(p).toString();
+      } catch (e) {
+        return "";
+      }
+    })();
 
     if (override == "") {
       override = "/1064x1064.png";
@@ -271,7 +277,13 @@ if (import.meta.env.DEV) {
       dimensions.width = width;
       dimensions.inferSize = false;
     } catch (e) {
-      override = readFileSync(p).toString();
+      override = (() => {
+        try {
+          return readFileSync(p).toString();
+        } catch (e) {
+          return "";
+        }
+      })();
 
       if (override == "") {
         override = "/1064x1064.png";
