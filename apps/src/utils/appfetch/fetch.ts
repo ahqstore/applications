@@ -54,11 +54,16 @@ const getApp = async (appId: string, urls: Constants) => {
   return fetch(url.app.replace("{APP_ID}", aId))
     .then((d) => d.json());
 };
-const getAppAsset = (appId: string, asset: string, urls: Constants) => {
+const getAppAsset = async (appId: string, asset: string, urls: Constants) => {
   const { url, appId: aId } = getPartFromURL(appId, urls);
 
-  return fetch(url.asset.replace("{APP_ID}", aId).replace("{ASSET}", asset))
-    .then((d) => d.arrayBuffer());
+  const uri = url.asset.replace("{APP_ID}", aId).replace("{ASSET}", asset);
+
+  return {
+    asset: await fetch(uri)
+      .then((d) => d.arrayBuffer()),
+    url: uri
+  };
 };
 
 async function blobToBase64(blob: Blob): Promise<string> {
@@ -75,20 +80,18 @@ async function blobToBase64(blob: Blob): Promise<string> {
 
 
 export async function getAppWrapped(appId: string, urls: Constants): Promise<[AHQStoreApplication, string]> {
-  const [app, img] = await Promise.all([
+  const [app, { asset: img, url: uri }] = await Promise.all([
     getApp(appId, urls),
     getAppAsset(appId, "0", urls)
   ]);
 
-  let blob = new Blob([img as unknown as any]);
+  let url = uri;
 
   if (appId.startsWith("f:")) {
-    const url = new TextDecoder().decode(await blob.arrayBuffer());
+    const uri = new TextDecoder().decode(img);
 
-    blob = await fetch(url)
-      .then((d) => d.arrayBuffer())
-      .then((d) => new Blob([d]));
+    url = uri;
   }
 
-  return [app, await blobToBase64(blob)];
+  return [app, url];
 }

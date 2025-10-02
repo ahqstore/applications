@@ -267,9 +267,7 @@ import AppBox from "./AppBox.astro";
       const e = item as HTMLDivElement;
 
       e.addEventListener("click", () => {
-        if (window.matchMedia("(min-width: 50rem)").matches) {
-          window.location.pathname = e.getAttribute("data-path")!!;
-        }
+        window.location.pathname = e.getAttribute("data-path")!!;
       });
     });
   </script>
@@ -286,6 +284,7 @@ import AppBox from "./AppBox.astro";
           <button
             data-path={`/applications/${os}/${hashes.get(i)!!}`}
             class="all mobileClick"
+            aria-label="Expand entries"
           >
             <ArrowRight className="arrow" />
           </button>
