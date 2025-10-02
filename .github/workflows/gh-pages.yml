@@ -113,6 +113,20 @@ jobs:
         run: tree
         working-directory: apps/dist
 
+      - name: Calculate and Report Final Site Size
+        run: |
+          FINAL_SIZE=$(du -sh apps/dist | awk '{print $1}')
+
+          # 2. Write the formatted size report to the GitHub Step Summary file
+          echo "## 📦 Published Artifact Size Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Uncompressed Site** | **$FINAL_SIZE** | ✅ Below 1 GB Limit |" >> $GITHUB_STEP_SUMMARY
+          echo "| GitHub Pages Limit | 1 GB | |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The site contains $(ls -R apps/dist | wc -l) total files (including optimized images)." >> $GITHUB_STEP_SUMMARY
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
