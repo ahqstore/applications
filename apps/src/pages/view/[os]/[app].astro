@@ -233,11 +233,11 @@ if (import.meta.env.DEV) {
   }
 
   // @ts-ignore
-  console.log(override || urls[iconUrl.replace("{ASSET}", "0")]);
+  console.log(override || urls[iconUrl.replace("{ASSET}", "0")].default);
 
   const mainIconOpt = await getImage({
     // @ts-ignore
-    src: override || urls[iconUrl.replace("{ASSET}", "0")],
+    src: override || urls[iconUrl.replace("{ASSET}", "0")].default,
     format: "webp",
     // For LCP, ensure `sizes` attribute is passed to the img tag
     // to help browser pick the right size quickly.
@@ -287,7 +287,8 @@ if (import.meta.env.DEV) {
       // @ts-ignore
       src:
         override ||
-        urls[iconUrl.replace("{ASSET}", String(json.displayImages[i]))],
+        // @ts-ignore
+        urls[iconUrl.replace("{ASSET}", String(json.displayImages[i]))].default,
       format: "webp",
       // For LCP, ensure `sizes` attribute is passed to the img tag
       // to help browser pick the right size quickly.
