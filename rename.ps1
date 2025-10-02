@@ -43,11 +43,10 @@ foreach ($Repo in $Repos) {
     $OriginalPath = $_.FullName
         
     # The new file name (filename only, not the full path), which is safer for Rename-Item.
-    # This resolves the "Cannot find a provider" error when using full paths in NewName.
     $NewName = "$($_.Name).png"
 
-    # Renaming the file
-    Rename-Item -Path $OriginalPath -NewName $NewName
+    # Renaming the file, ignoring any errors that occur (e.g., file lock, permission issue).
+    Rename-Item -Path $OriginalPath -NewName $NewName -ErrorAction SilentlyContinue
   }
     
   Write-Host "Completed rename for '$Repo'." -ForegroundColor Green
