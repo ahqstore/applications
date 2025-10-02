@@ -46,7 +46,7 @@ foreach ($Repo in $Repos) {
     $NewName = "$($_.Name).png"
 
     # Renaming the file, ignoring any errors that occur (e.g., file lock, permission issue).
-    Rename-Item -Path $OriginalPath -NewName $NewName -ErrorAction SilentlyContinue
+    Rename-Item -Path $OriginalPath -NewName $NewName -ErrorAction Continue
   }
     
   Write-Host "Completed rename for '$Repo'." -ForegroundColor Green
