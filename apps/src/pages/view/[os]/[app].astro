@@ -1,24 +1,15 @@
 ---
-import type { GetStaticPathsResult, ImageMetadata } from "astro";
-import { decode } from "@msgpack/msgpack";
+import type { GetStaticPathsResult } from "astro";
+import type { AHQStoreApplication } from "ahqstore-types";
 
-import * as sizeOf from "image-size";
+import { decode } from "@msgpack/msgpack";
 import { readFileSync, writeFileSync } from "node:fs";
 import { stringify } from "smol-toml";
 import { join } from "node:path";
+import { getImage } from "astro:assets";
+import { getImageParsed } from "@/server/img";
 
 import AppLayout from "@/layouts/AppLayout.astro";
-
-import { getImage } from "astro:assets";
-import type { AHQStoreApplication } from "ahqstore-types";
-
-const genImageFromPath = (height: number, width: number, url: string) =>
-  ({
-    src: `${url}?origWidth=${width}&origHeight=${height}&origFormat=png`,
-    width,
-    height,
-    format: "png",
-  }) as ImageMetadata;
 
 export interface Props {
   prefix: string;
@@ -134,9 +125,12 @@ const responsiveWidths = [
 let appInfo: AHQStoreApplication;
 let appImgs = [];
 
-const urls = import.meta.glob("../../../../../**/db/res/**/**.png", {
-  eager: true,
-});
+const urls: Record<string, { default: ImageMetadata }> = import.meta.glob(
+  "../../../../../**/db/res/**/**.png",
+  {
+    eager: true,
+  }
+);
 
 if (import.meta.env.DEV) {
   appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
@@ -212,50 +206,16 @@ if (import.meta.env.DEV) {
   writeFileSync(path2, JSON.stringify(json));
   writeFileSync(path3, stringify(json));
 
-  const p = join(import.meta.dirname, iconUrl.replace("{ASSET}", "0"));
+  const absolutePath = join(
+    import.meta.dirname,
+    iconUrl.replace("{ASSET}", "0")
+  );
 
-  let h: any = { width: undefined, height: undefined, inferSize: true };
-  let override: string | undefined = undefined;
-
-  try {
-    const { height, width } = sizeOf.default(readFileSync(p));
-
-    h.height = height;
-    h.width = width;
-    h.inferSize = false;
-  } catch (e) {
-    override = (() => {
-      try {
-        return readFileSync(p).toString();
-      } catch (e) {
-        return "";
-      }
-    })();
-
-    if (override == "") {
-      override = "/1064x1064.png";
-      h.height = 1064;
-      h.width = 1064;
-      h.inferSize = false;
-    }
-    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
-  }
-
-  // @ts-ignore
-  console.log(override || urls[iconUrl.replace("{ASSET}", "0")].default);
-
-  const mainIconOpt = await getImage({
-    // @ts-ignore
-    src: override || urls[iconUrl.replace("{ASSET}", "0")].default,
-    format: "webp",
-    // For LCP, ensure `sizes` attribute is passed to the img tag
-    // to help browser pick the right size quickly.
-    // This height is for the *output* image. If it's a background, it's just a hint.
-    widths: responsiveWidths, // Generate multiple widths
-    width: h.width,
-    height: h.height,
-    quality: 80,
-  });
+  const mainIconOpt = await getImageParsed(
+    urls,
+    iconUrl.replace("{ASSET}", "0"),
+    absolutePath
+  );
 
   appImgs.push(mainIconOpt);
 
@@ -265,52 +225,17 @@ if (import.meta.env.DEV) {
   );
 
   for (let i = 0; i < json.displayImages.length; i++) {
-    const p = join(
+    const absolutePath = join(
       import.meta.dirname,
       iconUrl.replace("{ASSET}", String(json.displayImages[i]))
     );
 
-    let dimensions: any = { width: 128, height: 128, inferSize: true }; // Safe fallback size
-    let override: string | undefined = undefined;
+    const ic = await getImageParsed(
+      urls,
+      iconUrl.replace("{ASSET}", String(json.displayImages[i])),
+      absolutePath
+    );
 
-    try {
-      const { height, width } = sizeOf.default(readFileSync(p));
-
-      dimensions.height = height;
-      dimensions.width = width;
-      dimensions.inferSize = false;
-    } catch (e) {
-      override = (() => {
-        try {
-          return readFileSync(p).toString();
-        } catch (e) {
-          return "";
-        }
-      })();
-
-      if (override == "") {
-        override = "/1064x1064.png";
-        dimensions.height = 1064;
-        dimensions.width = 1064;
-        dimensions.inferSize = false;
-      }
-      console.error("⚠️ Failed to load " + p);
-    }
-
-    const ic = await getImage({
-      // @ts-ignore
-      src:
-        override ||
-        // @ts-ignore
-        urls[iconUrl.replace("{ASSET}", String(json.displayImages[i]))].default,
-      format: "webp",
-      // For LCP, ensure `sizes` attribute is passed to the img tag
-      // to help browser pick the right size quickly.
-      // This height is for the *output* image. If it's a background, it's just a hint.
-      widths: responsiveWidths, // Generate multiple widths
-      quality: 80,
-      ...dimensions,
-    });
     appImgs.push(ic);
 
     writeFileSync(
