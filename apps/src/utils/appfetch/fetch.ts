@@ -66,19 +66,6 @@ const getAppAsset = async (appId: string, asset: string, urls: Constants) => {
   };
 };
 
-async function blobToBase64(blob: Blob): Promise<string> {
-  // 1. Convert the Blob to an ArrayBuffer
-  const arrayBuffer = await blob.arrayBuffer();
-
-  // 2. Create a Node Buffer from the ArrayBuffer
-  const buffer = Buffer.from(arrayBuffer);
-
-  // 3. Convert the Buffer to a Base64 string
-  // We prepend the data URI scheme for immediate use on the client
-  return `data:${blob.type || 'application/octet-stream'};base64,${buffer.toString('base64')}`;
-}
-
-
 export async function getAppWrapped(appId: string, urls: Constants): Promise<[AHQStoreApplication, string]> {
   const [app, { asset: img, url: uri }] = await Promise.all([
     getApp(appId, urls),
