@@ -138,8 +138,6 @@ const urls = import.meta.glob("../../../../../**/db/res/**/**.png", {
   eager: true,
 });
 
-console.log(urls);
-
 if (import.meta.env.DEV) {
   appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
     if (!s.ok) {
