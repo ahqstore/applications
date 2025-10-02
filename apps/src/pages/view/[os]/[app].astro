@@ -12,22 +12,15 @@ import AppLayout from "@/layouts/AppLayout.astro";
 import { getImage } from "astro:assets";
 import type { AHQStoreApplication } from "ahqstore-types";
 
-const imageFilePaths = import.meta.glob("../../../../../**/db/res/**/*", {
-  // Eagerly load the paths during build
-  eager: true,
-  query: "?url",
-});
-
-const genImageFromPath = (height: number, width: number, urlRelative: string) =>
+const genImageFromPath = (height: number, width: number, url: string) =>
   ({
-    // @ts-expect-error We're trying to do something
-    src: `${imageFilePaths[urlRelative].default}?origWidth=${width}&origHeight=${height}&origFormat=png`,
+    src: `${url}?origWidth=${width}&origHeight=${height}&origFormat=png`,
     width,
     height,
     format: "png",
   }) as ImageMetadata;
 
-interface Props {
+export interface Props {
   prefix: string;
   app: string;
   template: string;
@@ -141,6 +134,12 @@ const responsiveWidths = [
 let appInfo: AHQStoreApplication;
 let appImgs = [];
 
+const urls = import.meta.glob("../../../../../**/db/res/**/**.png", {
+  eager: true,
+});
+
+console.log(urls);
+
 if (import.meta.env.DEV) {
   appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
     if (!s.ok) {
@@ -188,16 +187,7 @@ if (import.meta.env.DEV) {
     ).toString()
   );
 
-  const iconUrl =
-    /*join(
-    import.meta.dirname,*/
-    `../../../../../${repoDir}/db/res/${app}/{ASSET}`;
-  // );
-
-  const iconUrlAbs = join(
-    import.meta.dirname,
-    `../../../../../${repoDir}/db/res/${app}/{ASSET}`
-  );
+  const iconUrl = `../../../../../${repoDir}/db/res/${app}/{ASSET}.png`;
 
   const assetInfo = join(
     import.meta.dirname,
@@ -224,67 +214,93 @@ if (import.meta.env.DEV) {
   writeFileSync(path2, JSON.stringify(json));
   writeFileSync(path3, stringify(json));
 
-  const p = iconUrl.replace("{ASSET}", "0");
-  const ab = iconUrlAbs.replace("{ASSET}", "0");
+  const p = join(import.meta.dirname, iconUrl.replace("{ASSET}", "0"));
 
-  let h = { width: 128, height: 128 };
+  let h: any = { width: undefined, height: undefined, inferSize: true };
+  let override: string | undefined = undefined;
 
   try {
-    h = sizeOf.default(readFileSync(ab));
+    const { height, width } = sizeOf.default(readFileSync(p));
 
-    const mainIconOpt = await getImage({
-      src: genImageFromPath(h.height, h.width, p),
+    h.height = height;
+    h.width = width;
+    h.inferSize = false;
+  } catch (e) {
+    override = readFileSync(p).toString();
+
+    if (override == "") {
+      override = "/1064x1064.png";
+    }
+    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
+  }
+
+  const mainIconOpt = await getImage({
+    // @ts-ignore
+    src: override || urls[iconUrl.replace("{ASSET}", "0")],
+    format: "webp",
+    // For LCP, ensure `sizes` attribute is passed to the img tag
+    // to help browser pick the right size quickly.
+    // This height is for the *output* image. If it's a background, it's just a hint.
+    widths: responsiveWidths, // Generate multiple widths
+    width: h.width,
+    height: h.height,
+    quality: 80,
+  });
+
+  if (mainIconOpt.src.startsWith("/")) {
+    throw new Error("Something's wrong");
+  }
+
+  appImgs.push(mainIconOpt);
+
+  writeFileSync(
+    assetInfo.replace("{ASSET}", "0"),
+    JSON.stringify([mainIconOpt.src, mainIconOpt.srcSet.attribute])
+  );
+
+  for (let i = 0; i < json.displayImages.length; i++) {
+    const p = join(
+      import.meta.dirname,
+      iconUrl.replace("{ASSET}", String(json.displayImages[i]))
+    );
+
+    let dimensions: any = { width: 128, height: 128, inferSize: true }; // Safe fallback size
+    let override: string | undefined = undefined;
+
+    try {
+      const { height, width } = sizeOf.default(readFileSync(p));
+
+      dimensions.height = height;
+      dimensions.width = width;
+      dimensions.inferSize = false;
+    } catch (e) {
+      override = readFileSync(p).toString();
+
+      if (override == "") {
+        override = "/1064x1064.png";
+      }
+      console.error("⚠️ Failed to load " + p);
+    }
+
+    const ic = await getImage({
+      // @ts-ignore
+      src:
+        override ||
+        urls[iconUrl.replace("{ASSET}", String(json.displayImages[i]))],
       format: "webp",
       // For LCP, ensure `sizes` attribute is passed to the img tag
       // to help browser pick the right size quickly.
       // This height is for the *output* image. If it's a background, it's just a hint.
       widths: responsiveWidths, // Generate multiple widths
-      width: h.width,
-      height: h.height,
       quality: 80,
+      ...dimensions,
     });
-
-    appImgs.push(mainIconOpt);
+    appImgs.push(ic);
 
     writeFileSync(
-      assetInfo.replace("{ASSET}", "0"),
-      JSON.stringify([mainIconOpt.src, mainIconOpt.srcSet.attribute])
+      assetInfo.replace("{ASSET}", String(json.displayImages[i])),
+      JSON.stringify([ic.src, ic.srcSet.attribute])
     );
-  } catch (e) {
-    appImgs.push(null as any);
-    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`, e);
-  }
-
-  for (let i = 0; i < json.displayImages.length; i++) {
-    const p = iconUrl.replace("{ASSET}", String(json.displayImages[i]));
-    const ab = iconUrlAbs.replace("{ASSET}", String(json.displayImages[i]));
-
-    let dimensions = { width: 128, height: 128 }; // Safe fallback size
-
-    try {
-      dimensions = sizeOf.default(readFileSync(ab));
-
-      const ic = await getImage({
-        src: genImageFromPath(h.height, h.width, p),
-        format: "webp",
-        // For LCP, ensure `sizes` attribute is passed to the img tag
-        // to help browser pick the right size quickly.
-        // This height is for the *output* image. If it's a background, it's just a hint.
-        widths: responsiveWidths, // Generate multiple widths
-        width: dimensions.width,
-        height: dimensions.height,
-        quality: 80,
-      });
-      appImgs.push(ic);
-
-      writeFileSync(
-        assetInfo.replace("{ASSET}", String(json.displayImages[i])),
-        JSON.stringify([ic.src, ic.srcSet.attribute])
-      );
-    } catch (e) {
-      appImgs.push(null as any);
-      console.error("⚠️ Failed to load " + p);
-    }
   }
 
   appInfo = json;
