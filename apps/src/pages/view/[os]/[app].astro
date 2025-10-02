@@ -204,7 +204,14 @@ if (import.meta.env.DEV) {
 
   const p = iconUrl.replace("{ASSET}", "0");
 
-  const h = sizeOf.default(readFileSync(p));
+  let h = { width: 128, height: 128 };
+
+  try {
+    h = sizeOf.default(readFileSync(p));
+  } catch (e) {
+    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
+  }
+
   const mainIconOpt = await getImage({
     src: p,
     format: "webp",
@@ -225,7 +232,14 @@ if (import.meta.env.DEV) {
 
   for (let i = 0; i < json.displayImages.length; i++) {
     const p = iconUrl.replace("{ASSET}", String(json.displayImages[i]));
-    const h = sizeOf.default(readFileSync(p));
+
+    let dimensions = { width: 128, height: 128 }; // Safe fallback size
+
+    try {
+      dimensions = sizeOf.default(readFileSync(p));
+    } catch (e) {
+      console.error("⚠️ Failed to load " + p);
+    }
 
     const ic = await getImage({
       src: p,
@@ -234,8 +248,8 @@ if (import.meta.env.DEV) {
       // to help browser pick the right size quickly.
       // This height is for the *output* image. If it's a background, it's just a hint.
       widths: responsiveWidths, // Generate multiple widths
-      width: h.width,
-      height: h.height,
+      width: dimensions.width,
+      height: dimensions.height,
       quality: 80,
     });
     appImgs.push(ic);
