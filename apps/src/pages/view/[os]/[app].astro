@@ -244,6 +244,7 @@ if (import.meta.env.DEV) {
       quality: 80,
     });
 
+    console.log(mainIconOpt);
     if (mainIconOpt.src.startsWith("/")) {
       throw new Error("Something's wrong");
     }
@@ -257,6 +258,7 @@ if (import.meta.env.DEV) {
   } catch (e) {
     appImgs.push(null as any);
     console.error(`🚨 Failed to load (sizeof) main icon of ${p}`, e);
+    throw new Error("Something's wrong");
   }
 
   for (let i = 0; i < json.displayImages.length; i++) {
