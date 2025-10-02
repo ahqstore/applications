@@ -194,6 +194,11 @@ if (import.meta.env.DEV) {
     `../../../../../${repoDir}/db/res/${app}/{ASSET}`;
   // );
 
+  const iconUrlAbs = join(
+    import.meta.dirname,
+    `../../../../../${repoDir}/db/res/${app}/{ASSET}`
+  );
+
   const assetInfo = join(
     import.meta.dirname,
     `../../../../public/api/v1/assets/${prefix}/${app}_{ASSET}.json`
@@ -220,11 +225,12 @@ if (import.meta.env.DEV) {
   writeFileSync(path3, stringify(json));
 
   const p = iconUrl.replace("{ASSET}", "0");
+  const ab = iconUrlAbs.replace("{ASSET}", "0");
 
   let h = { width: 128, height: 128 };
 
   try {
-    h = sizeOf.default(readFileSync(p));
+    h = sizeOf.default(readFileSync(ab));
 
     const mainIconOpt = await getImage({
       src: genImageFromPath(h.height, h.width, p),
@@ -250,16 +256,17 @@ if (import.meta.env.DEV) {
     );
   } catch (e) {
     appImgs.push(null as any);
-    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
+    console.error(`🚨 Failed to load (sizeof) main icon of ${p}`, e);
   }
 
   for (let i = 0; i < json.displayImages.length; i++) {
     const p = iconUrl.replace("{ASSET}", String(json.displayImages[i]));
+    const ab = iconUrlAbs.replace("{ASSET}", String(json.displayImages[i]));
 
     let dimensions = { width: 128, height: 128 }; // Safe fallback size
 
     try {
-      dimensions = sizeOf.default(readFileSync(p));
+      dimensions = sizeOf.default(readFileSync(ab));
 
       const ic = await getImage({
         src: genImageFromPath(h.height, h.width, p),
