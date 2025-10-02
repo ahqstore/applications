@@ -234,6 +234,9 @@ if (import.meta.env.DEV) {
     console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
   }
 
+  // @ts-ignore
+  console.log(override || urls[iconUrl.replace("{ASSET}", "0")]);
+
   const mainIconOpt = await getImage({
     // @ts-ignore
     src: override || urls[iconUrl.replace("{ASSET}", "0")],
