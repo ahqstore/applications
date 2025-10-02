@@ -2,10 +2,13 @@
 import type { GetStaticPathsResult } from "astro";
 import { decode } from "@msgpack/msgpack";
 
+import * as sizeOf from "image-size";
 import { readFileSync, writeFileSync } from "node:fs";
 import { stringify } from "smol-toml";
 import { join } from "node:path";
+
 import AppLayout from "@/layouts/AppLayout.astro";
+
 import { getImage } from "astro:assets";
 import type { AHQStoreApplication } from "ahqstore-types";
 
@@ -141,7 +144,7 @@ if (import.meta.env.DEV) {
       // to help browser pick the right size quickly.
       // This height is for the *output* image. If it's a background, it's just a hint.
       widths: responsiveWidths, // Generate multiple widths
-      inferSize: true, // Still useful for the aspect ratio
+      inferSize: true,
       quality: 80,
     })
   );
@@ -199,14 +202,18 @@ if (import.meta.env.DEV) {
   writeFileSync(path2, JSON.stringify(json));
   writeFileSync(path3, stringify(json));
 
+  const p = iconUrl.replace("{ASSET}", "0");
+
+  const h = sizeOf.default(readFileSync(p));
   const mainIconOpt = await getImage({
-    src: iconUrl.replace("{ASSET}", "0"),
+    src: p,
     format: "webp",
     // For LCP, ensure `sizes` attribute is passed to the img tag
     // to help browser pick the right size quickly.
     // This height is for the *output* image. If it's a background, it's just a hint.
     widths: responsiveWidths, // Generate multiple widths
-    inferSize: true, // Still useful for the aspect ratio
+    width: h.width,
+    height: h.height,
     quality: 80,
   });
   appImgs.push(mainIconOpt);
@@ -217,14 +224,18 @@ if (import.meta.env.DEV) {
   );
 
   for (let i = 0; i < json.displayImages.length; i++) {
+    const p = iconUrl.replace("{ASSET}", String(json.displayImages[i]));
+    const h = sizeOf.default(readFileSync(p));
+
     const ic = await getImage({
-      src: iconUrl.replace("{ASSET}", String(json.displayImages[i])),
+      src: p,
       format: "webp",
       // For LCP, ensure `sizes` attribute is passed to the img tag
       // to help browser pick the right size quickly.
       // This height is for the *output* image. If it's a background, it's just a hint.
       widths: responsiveWidths, // Generate multiple widths
-      inferSize: true, // Still useful for the aspect ratio
+      width: h.width,
+      height: h.height,
       quality: 80,
     });
     appImgs.push(ic);
