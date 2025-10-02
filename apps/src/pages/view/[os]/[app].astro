@@ -248,10 +248,6 @@ if (import.meta.env.DEV) {
     quality: 80,
   });
 
-  if (mainIconOpt.src.startsWith("/")) {
-    throw new Error("Something's wrong");
-  }
-
   appImgs.push(mainIconOpt);
 
   writeFileSync(
