@@ -1,5 +1,5 @@
 ---
-import type { GetStaticPathsResult } from "astro";
+import type { GetStaticPathsResult, ImageMetadata } from "astro";
 import { decode } from "@msgpack/msgpack";
 
 import * as sizeOf from "image-size";
@@ -11,6 +11,21 @@ import AppLayout from "@/layouts/AppLayout.astro";
 
 import { getImage } from "astro:assets";
 import type { AHQStoreApplication } from "ahqstore-types";
+
+const imageFilePaths = import.meta.glob("../../../../../**/db/res/**/*", {
+  // Eagerly load the paths during build
+  eager: true,
+  query: "?url",
+});
+
+const genImageFromPath = (height: number, width: number, urlRelative: string) =>
+  ({
+    // @ts-expect-error We're trying to do something
+    src: `${imageFilePaths[urlRelative].default}?origWidth=${width}&origHeight=${height}&origFormat=png`,
+    width,
+    height,
+    format: "png",
+  }) as ImageMetadata;
 
 interface Props {
   prefix: string;
@@ -97,7 +112,8 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   return output;
 }
 
-const { prefix, repoDir, app, template, appAssetUrl } = Astro.props;
+const { prefix, repoDir, app, template, appAssetUrl } =
+  Astro.props as any as Props;
 
 const responsiveWidths = [
   32,
@@ -172,10 +188,11 @@ if (import.meta.env.DEV) {
     ).toString()
   );
 
-  const iconUrl = join(
-    // import.meta.dirname,
-    `../../../../../${repoDir}/db/res/${app}/{ASSET}`
-  );
+  const iconUrl =
+    /*join(
+    import.meta.dirname,*/
+    `../../../../../${repoDir}/db/res/${app}/{ASSET}`;
+  // );
 
   const assetInfo = join(
     import.meta.dirname,
@@ -208,32 +225,33 @@ if (import.meta.env.DEV) {
 
   try {
     h = sizeOf.default(readFileSync(p));
+
+    const mainIconOpt = await getImage({
+      src: genImageFromPath(h.height, h.width, p),
+      format: "webp",
+      // For LCP, ensure `sizes` attribute is passed to the img tag
+      // to help browser pick the right size quickly.
+      // This height is for the *output* image. If it's a background, it's just a hint.
+      widths: responsiveWidths, // Generate multiple widths
+      width: h.width,
+      height: h.height,
+      quality: 80,
+    });
+
+    if (mainIconOpt.src.startsWith("/")) {
+      throw new Error("Something's wrong");
+    }
+
+    appImgs.push(mainIconOpt);
+
+    writeFileSync(
+      assetInfo.replace("{ASSET}", "0"),
+      JSON.stringify([mainIconOpt.src, mainIconOpt.srcSet.attribute])
+    );
   } catch (e) {
+    appImgs.push(null as any);
     console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
   }
-
-  const mainIconOpt = await getImage({
-    src: p,
-    format: "webp",
-    // For LCP, ensure `sizes` attribute is passed to the img tag
-    // to help browser pick the right size quickly.
-    // This height is for the *output* image. If it's a background, it's just a hint.
-    widths: responsiveWidths, // Generate multiple widths
-    width: h.width,
-    height: h.height,
-    quality: 80,
-  });
-
-  if (mainIconOpt.src.startsWith("/")) {
-    throw new Error("Something's wrong");
-  }
-
-  appImgs.push(mainIconOpt);
-
-  writeFileSync(
-    assetInfo.replace("{ASSET}", "0"),
-    JSON.stringify([mainIconOpt.src, mainIconOpt.srcSet.attribute])
-  );
 
   for (let i = 0; i < json.displayImages.length; i++) {
     const p = iconUrl.replace("{ASSET}", String(json.displayImages[i]));
@@ -242,27 +260,28 @@ if (import.meta.env.DEV) {
 
     try {
       dimensions = sizeOf.default(readFileSync(p));
+
+      const ic = await getImage({
+        src: genImageFromPath(h.height, h.width, p),
+        format: "webp",
+        // For LCP, ensure `sizes` attribute is passed to the img tag
+        // to help browser pick the right size quickly.
+        // This height is for the *output* image. If it's a background, it's just a hint.
+        widths: responsiveWidths, // Generate multiple widths
+        width: dimensions.width,
+        height: dimensions.height,
+        quality: 80,
+      });
+      appImgs.push(ic);
+
+      writeFileSync(
+        assetInfo.replace("{ASSET}", String(json.displayImages[i])),
+        JSON.stringify([ic.src, ic.srcSet.attribute])
+      );
     } catch (e) {
+      appImgs.push(null as any);
       console.error("⚠️ Failed to load " + p);
     }
-
-    const ic = await getImage({
-      src: p,
-      format: "webp",
-      // For LCP, ensure `sizes` attribute is passed to the img tag
-      // to help browser pick the right size quickly.
-      // This height is for the *output* image. If it's a background, it's just a hint.
-      widths: responsiveWidths, // Generate multiple widths
-      width: dimensions.width,
-      height: dimensions.height,
-      quality: 80,
-    });
-    appImgs.push(ic);
-
-    writeFileSync(
-      assetInfo.replace("{ASSET}", String(json.displayImages[i])),
-      JSON.stringify([ic.src, ic.srcSet.attribute])
-    );
   }
 
   appInfo = json;
