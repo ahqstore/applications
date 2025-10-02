@@ -7,25 +7,14 @@ import type { ImageMetadata } from "astro";
 
 const responsiveWidths = [
   32,
-  48,
   64,
   96,
   128,
   256,
   512,
-  100,
-  200,
-  284,
-  320, // Small mobile
-  640, // Medium mobile / Small tablet
-  768, // Tablet / Small desktop
-  1024, // Desktop
-  1280, // Larger Desktop
-  // You might want to include a width up to the maximum display size you expect,
-  // but avoid going over the actual display size needed.
-  // For a 2000x2000 source, consider the actual space the image will occupy on screen.
-  // If your hero section is max 1400px wide, no need for widths > 1400px.
-  1440, // Example: common max width for hero on larger screens
+  768,
+  1024,
+  1440,
 ];
 
 export async function getImageParsed(
