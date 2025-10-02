@@ -129,7 +129,6 @@ if (import.meta.env.DEV) {
   appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
     if (!s.ok) {
       const body = await (await s.blob()).text();
-      console.log(body);
 
       throw new Error("Received an error!");
     }
@@ -262,8 +261,6 @@ if (import.meta.env.DEV) {
 
   appInfo = json;
 }
-
-console.log(appImgs);
 ---
 
 <AppLayout>

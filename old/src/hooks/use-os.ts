@@ -4,8 +4,6 @@ export function useOperatingSystem(): System {
   // @ts-ignore
   const agent = navigator.userAgent.toLowerCase();
 
-  console.log(agent);
-
   if (agent.includes("windows")) {
     return "windows"
   }
