@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   image: {
-    domains: ["github.com", "f-droid.org", "rawcdn.githack.com"],
+    domains: ["*"],
   },
   integrations: [react()],
 });
