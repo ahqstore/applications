@@ -234,6 +234,9 @@ if (import.meta.env.DEV) {
 
     if (override == "") {
       override = "/1064x1064.png";
+      h.height = 1064;
+      h.width = 1064;
+      h.inferSize = false;
     }
     console.error(`🚨 Failed to load (sizeof) main icon of ${p}`);
   }
@@ -287,6 +290,9 @@ if (import.meta.env.DEV) {
 
       if (override == "") {
         override = "/1064x1064.png";
+        dimensions.height = 1064;
+        dimensions.width = 1064;
+        dimensions.inferSize = false;
       }
       console.error("⚠️ Failed to load " + p);
     }
