@@ -6,12 +6,15 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { stringify } from "smol-toml";
 import { join } from "node:path";
 import AppLayout from "@/layouts/AppLayout.astro";
+import { getImage } from "astro:assets";
+import type { AHQStoreApplication } from "ahqstore-types";
 
 interface Props {
   prefix: string;
   app: string;
   template: string;
   repoDir: string;
+  appAssetUrl: string;
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
@@ -22,6 +25,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
       prefix: "a",
       name: "map_data_ahqstore_json",
       app: "app_url_ahqstore",
+      appA: "app_asset_url_ahqstore",
       os: "community",
       repo_dir: "repo_community",
     },
@@ -29,6 +33,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
       prefix: "l",
       name: "map_data_linux_json",
       app: "app_url_linux",
+      appA: "app_asset_url_linux",
       os: "linux",
       repo_dir: "repo_linux",
     },
@@ -36,6 +41,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
       prefix: "f",
       name: "map_data_fdroid_json",
       app: "app_url_fdroid",
+      appA: "app_asset_url_fdroid",
       os: "android",
       repo_dir: "repo_fdroid",
     },
@@ -43,12 +49,13 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
       prefix: "w",
       name: "map_data_winget_json",
       app: "app_url_winget",
+      appA: "app_asset_url_winget",
       os: "win32",
       repo_dir: "repo_win32",
     },
   ];
 
-  toFetch.forEach(({ name, os, app, prefix, repo_dir }) => {
+  toFetch.forEach(({ name, os, app, appA, prefix, repo_dir }) => {
     const data = decode(
       readFileSync(
         join(import.meta.dirname, `../../../../public/jsondump/${name}`)
@@ -57,6 +64,10 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 
     const appUrl = readFileSync(
       join(import.meta.dirname, `../../../../public/jsondump/${app}`)
+    ).toString();
+
+    const appAssetUrl = readFileSync(
+      join(import.meta.dirname, `../../../../public/jsondump/${appA}`)
     ).toString();
 
     data.forEach((id) => {
@@ -73,6 +84,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
           prefix,
           app: identifier,
           template: appUrl,
+          appAssetUrl,
           repoDir: repo_dir,
         },
       });
@@ -82,9 +94,33 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   return output;
 }
 
-const { prefix, repoDir, app, template } = Astro.props;
+const { prefix, repoDir, app, template, appAssetUrl } = Astro.props;
 
-let appInfo;
+const responsiveWidths = [
+  32,
+  48,
+  64,
+  96,
+  128,
+  256,
+  512,
+  100,
+  200,
+  284,
+  320, // Small mobile
+  640, // Medium mobile / Small tablet
+  768, // Tablet / Small desktop
+  1024, // Desktop
+  1280, // Larger Desktop
+  // You might want to include a width up to the maximum display size you expect,
+  // but avoid going over the actual display size needed.
+  // For a 2000x2000 source, consider the actual space the image will occupy on screen.
+  // If your hero section is max 1400px wide, no need for widths > 1400px.
+  1440, // Example: common max width for hero on larger screens
+];
+
+let appInfo: AHQStoreApplication;
+let appImgs = [];
 
 if (import.meta.env.DEV) {
   appInfo = await fetch(template.replace("{APP_ID}", app)).then(async (s) => {
@@ -96,11 +132,51 @@ if (import.meta.env.DEV) {
     }
     return s.json();
   });
+
+  appImgs.push(
+    await getImage({
+      src: appAssetUrl.replace("{APP_ID}", app).replace("{ASSET}", "0"),
+      format: "webp",
+      // For LCP, ensure `sizes` attribute is passed to the img tag
+      // to help browser pick the right size quickly.
+      // This height is for the *output* image. If it's a background, it's just a hint.
+      widths: responsiveWidths, // Generate multiple widths
+      inferSize: true, // Still useful for the aspect ratio
+      quality: 80,
+    })
+  );
+
+  for (let i = 0; i < appInfo.displayImages.length; i++) {
+    appImgs.push(
+      await getImage({
+        src: appAssetUrl
+          .replace("{APP_ID}", app)
+          .replace("{ASSET}", String(appInfo.displayImages[i])),
+        format: "webp",
+        // For LCP, ensure `sizes` attribute is passed to the img tag
+        // to help browser pick the right size quickly.
+        // This height is for the *output* image. If it's a background, it's just a hint.
+        widths: responsiveWidths, // Generate multiple widths
+        inferSize: true, // Still useful for the aspect ratio
+        quality: 80,
+      })
+    );
+  }
 } else {
-  const json = JSON.parse(
+  const json: AHQStoreApplication = JSON.parse(
     readFileSync(
       join(import.meta.dirname, `../../../../../${repoDir}/db/apps/${app}.json`)
     ).toString()
+  );
+
+  const iconUrl = join(
+    import.meta.dirname,
+    `../../../../../${repoDir}/db/res/${app}/{ASSET}`
+  );
+
+  const assetInfo = join(
+    import.meta.dirname,
+    `../../../../public/api/v1/assets/${prefix}/${app}_{ASSET}.json`
   );
 
   // Actual appInfo loading
@@ -123,10 +199,49 @@ if (import.meta.env.DEV) {
   writeFileSync(path2, JSON.stringify(json));
   writeFileSync(path3, stringify(json));
 
+  const mainIconOpt = await getImage({
+    src: iconUrl.replace("{ASSET}", "0"),
+    format: "webp",
+    // For LCP, ensure `sizes` attribute is passed to the img tag
+    // to help browser pick the right size quickly.
+    // This height is for the *output* image. If it's a background, it's just a hint.
+    widths: responsiveWidths, // Generate multiple widths
+    inferSize: true, // Still useful for the aspect ratio
+    quality: 80,
+  });
+  appImgs.push(mainIconOpt);
+
+  writeFileSync(
+    assetInfo.replace("{ASSET}", "0"),
+    JSON.stringify([mainIconOpt.src, mainIconOpt.srcSet.attribute])
+  );
+
+  for (let i = 0; i < json.displayImages.length; i++) {
+    const ic = await getImage({
+      src: iconUrl.replace("{ASSET}", String(json.displayImages[i])),
+      format: "webp",
+      // For LCP, ensure `sizes` attribute is passed to the img tag
+      // to help browser pick the right size quickly.
+      // This height is for the *output* image. If it's a background, it's just a hint.
+      widths: responsiveWidths, // Generate multiple widths
+      inferSize: true, // Still useful for the aspect ratio
+      quality: 80,
+    });
+    appImgs.push(ic);
+
+    writeFileSync(
+      assetInfo.replace("{ASSET}", String(json.displayImages[i])),
+      JSON.stringify([ic.src, ic.srcSet.attribute])
+    );
+  }
+
   appInfo = json;
 }
+
+console.log(appImgs);
 ---
 
 <AppLayout>
   {JSON.stringify(appInfo, null, 4)}
+  {JSON.stringify(appImgs, null, 4)}
 </AppLayout>

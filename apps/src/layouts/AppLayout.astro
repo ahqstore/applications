@@ -26,7 +26,9 @@ const {} = Astro.props;
         />
       </SearchBox>
 
-      <slot />
+      <div class="w-full h-full overflow-x-hidden overflow-y-scroll pt-3 pb-6">
+        <slot />
+      </div>
     </div>
   </div>
 </Layout>
