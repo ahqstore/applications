@@ -173,7 +173,7 @@ if (import.meta.env.DEV) {
   );
 
   const iconUrl = join(
-    import.meta.dirname,
+    // import.meta.dirname,
     `../../../../../${repoDir}/db/res/${app}/{ASSET}`
   );
 
@@ -223,6 +223,11 @@ if (import.meta.env.DEV) {
     height: h.height,
     quality: 80,
   });
+
+  if (mainIconOpt.src.startsWith("/")) {
+    throw new Error("Something's wrong");
+  }
+
   appImgs.push(mainIconOpt);
 
   writeFileSync(
