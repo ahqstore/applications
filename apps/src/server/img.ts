@@ -8,13 +8,8 @@ import type { ImageMetadata } from "astro";
 const responsiveWidths = [
   32,
   64,
-  96,
   128,
   256,
-  512,
-  768,
-  1024,
-  1440,
 ];
 
 export async function getImageParsed(

@@ -11,7 +11,7 @@ interface Props {
 
 const { application, img, path } = Astro.props as Props;
 
-const responsiveWidths = [32, 64, 96, 128, 256, 512, 768, 1024, 1440];
+const responsiveWidths = [32, 64, 128, 256];
 
 const optiImg = await getImage({
   src: img,
