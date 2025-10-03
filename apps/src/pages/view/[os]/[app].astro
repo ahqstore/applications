@@ -212,7 +212,8 @@ if (import.meta.env.DEV) {
     const ic = await getImageParsed(
       urls,
       iconUrl.replace("{ASSET}", String(json.displayImages[i])),
-      absolutePath
+      absolutePath,
+      true
     );
 
     appImgs.push(ic);
