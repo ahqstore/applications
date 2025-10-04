@@ -171,19 +171,7 @@ if (import.meta.env.DEV) {
     `../../../../public/api/v1/${prefix}/${app}.json`
   );
 
-  const path2 = join(
-    import.meta.dirname,
-    `../../../../public/api/v1/${prefix}/${app}`
-  );
-
-  const path3 = join(
-    import.meta.dirname,
-    `../../../../public/api/v1/${prefix}/${app}.toml`
-  );
-
   writeFileSync(path, JSON.stringify(json));
-  writeFileSync(path2, JSON.stringify(json));
-  writeFileSync(path3, stringify(json));
 
   const absolutePath = join(
     import.meta.dirname,

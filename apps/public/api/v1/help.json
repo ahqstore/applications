@@ -1,18 +1,15 @@
 {
-  "GET /applications/api/v1/{prefix}/{application_id}": {
+  "GET /applications/api/v1/assets/{prefix}/{application_id}_{asset}.json": {
     "{prefix}": "Prefixes like `w`, `l`, `a`, `f`",
     "{application_id}": "Application id without the `w:`, `l:`, `a:`, `f:` prefix",
-    "?": "Gets application information from our database (json file format)"
+    "{asset}": "ID of asset you'd like to fetch `0` means the app icon, example: 0, 1",
+    "?": "Gets asset srcset from our database (json file format)",
+    "%example": ["<largest src>", "<src set total>"]
   },
   "GET /applications/api/v1/{prefix}/{application_id}.json": {
     "{prefix}": "Prefixes like `w`, `l`, `a`, `f`",
     "{application_id}": "Application id without the `w:`, `l:`, `a:`, `f:` prefix",
     "?": "Gets application information from our database (json file format)"
-  },
-  "GET /applications/api/v1/{prefix}/{application_id}.toml": {
-    "{prefix}": "Prefixes like `w`, `l`, `a`, `f`",
-    "{application_id}": "Application id without the `w:`, `l:`, `a:`, `f:` prefix",
-    "?": "Gets application information from our database (toml file format)"
   },
   "GET /applications/api/v1/developers/{dev_id}.json": {
     "status": "Not Yet ready",
